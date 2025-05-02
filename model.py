@@ -11,9 +11,9 @@ def create_model(input_shape):
         # Ensure input_shape is a tuple
         if not isinstance(input_shape, tuple):
             input_shape = tuple(input_shape)
-
+            
         logger.info(f"Creating model with input shape: {input_shape}")
-
+        
         # Create the model
         model = tf.keras.Sequential([
             tf.keras.layers.Dense(64, activation='relu', input_shape=input_shape),
@@ -23,16 +23,16 @@ def create_model(input_shape):
             tf.keras.layers.Dense(16, activation='relu'),
             tf.keras.layers.Dense(1, activation='sigmoid')  # Binary classification
         ])
-
+        
         # Compile the model
         model.compile(
             optimizer='adam',
             loss='binary_crossentropy',
             metrics=['accuracy']
         )
-
+        
         return model
-
+        
     except Exception as e:
         logger.error(f"Error creating model: {str(e)}")
-        raise
+        raise 

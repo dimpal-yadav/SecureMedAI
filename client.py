@@ -18,21 +18,16 @@ class HeartDiseaseClient(fl.client.NumPyClient):
         # Create model with the correct input shape
         self.model = create_model(input_shape=(self.x_train.shape[1],))
         logger.info(f"Client {client_id} initialized with input shape: {self.x_train.shape[1]}")
-
+        
     def get_parameters(self, config):
         """Get model parameters."""
         return [val.numpy() for val in self.model.trainable_variables]
-
+        
     def fit(self, parameters, config):
         """Train the model on the client's data."""
-
-        # Debugging
-        logger.info(f"Client {self.client_id}: Received weight shapes: {[w.shape for w in parameters]}")
-        logger.info(f"Client {self.client_id}: Model weight shapes before setting: {[w.shape for w in self.model.get_weights()]}")
-
         # Set model parameters
         self.model.set_weights(parameters)
-
+        
         # Train the model with verbose output
         history = self.model.fit(
             self.x_train, self.y_train,
@@ -41,7 +36,7 @@ class HeartDiseaseClient(fl.client.NumPyClient):
             validation_split=0.2,
             verbose=1  # Changed to 1 to show progress bar
         )
-
+        
         # Get metrics
         metrics = {
             "train_loss": history.history["loss"][-1],
@@ -50,40 +45,40 @@ class HeartDiseaseClient(fl.client.NumPyClient):
             "val_accuracy": history.history["val_accuracy"][-1],
             "client_id": self.client_id
         }
-
+        
         # Print detailed metrics
         logger.info(f"Client {self.client_id} Training Results:")
         logger.info(f"Final Training Loss: {metrics['train_loss']:.4f}")
         logger.info(f"Final Training Accuracy: {metrics['train_accuracy']:.4f}")
         logger.info(f"Final Validation Loss: {metrics['val_loss']:.4f}")
         logger.info(f"Final Validation Accuracy: {metrics['val_accuracy']:.4f}")
-
+        
         # Save the model after training
         self.save_model()
-
+        
         return self.get_parameters(config), len(self.x_train), metrics
-
+        
     def evaluate(self, parameters, config):
         """Evaluate the model on the client's data."""
         # Set model parameters
         self.model.set_weights(parameters)
-
+        
         # Evaluate the model
         loss, accuracy = self.model.evaluate(self.x_test, self.y_test, verbose=1)
-
+        
         metrics = {
             "test_loss": loss,
             "test_accuracy": accuracy,
             "client_id": self.client_id
         }
-
+        
         # Print evaluation results
         logger.info(f"Client {self.client_id} Evaluation Results:")
         logger.info(f"Test Loss: {loss:.4f}")
         logger.info(f"Test Accuracy: {accuracy:.4f}")
-
+        
         return loss, len(self.x_test), metrics
-
+        
     def save_model(self):
         """Save the trained model."""
         try:
@@ -99,7 +94,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--client-id", type=int, required=True)
     args = parser.parse_args()
-
+    
     # Create and start client
     client = HeartDiseaseClient(args.client_id)
     fl.client.start_numpy_client(
@@ -108,4 +103,4 @@ def main():
     )
 
 if __name__ == "__main__":
-    main()
+    main() 

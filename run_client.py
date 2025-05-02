@@ -13,10 +13,11 @@ def main():
     parser.add_argument("--client-id", type=int, required=True, help="Client ID")
     parser.add_argument("--server-address", type=str, default="127.0.0.1:8080", help="Server address")
     args = parser.parse_args()
-    
+
     # Create and start client
     client = HeartDiseaseClient(args.client_id)
-    fl.client.start_client(server_address=args.server_address, client=client)
+    # Changed from start_client to start_numpy_client to match the implementation in client.py
+    fl.client.start_numpy_client(server_address=args.server_address, client=client)
 
 if __name__ == "__main__":
     main()

@@ -10,17 +10,18 @@ logger = logging.getLogger(__name__)
 
 class HeartDiseaseServer(fl.server.strategy.FedAvg):
     def __init__(self, *args, **kwargs):
+        # Create model with correct input shape
+        self.model = create_model(input_shape=(48,))  # Match the preprocessed input shape
+
+        # Get initial weights from the model rather than hardcoding shapes
+        initial_weights = self.model.get_weights()
+        initial_parameters = fl.common.ndarrays_to_parameters(initial_weights)
+
+        # Update kwargs with the correct initial parameters
+        if "initial_parameters" in kwargs:
+            kwargs["initial_parameters"] = initial_parameters
+
         super().__init__(*args, **kwargs)
-        self.input_shape = 48
-        self.model = create_model(input_shape=(self.input_shape,))
-        logger.info(f"Server initialized model with input shape: {self.input_shape}")
-
-        # Log model architecture
-        self.model.summary(print_fn=logger.info)
-
-        # Verify internal weight shapes
-        weight_shapes = [w.shape for w in self.model.get_weights()]
-        logger.info(f"Server model weight shapes: {weight_shapes}")
 
     def aggregate_fit(self, server_round, results, failures):
         """Aggregate model updates from clients."""
@@ -67,19 +68,11 @@ class HeartDiseaseServer(fl.server.strategy.FedAvg):
         return loss_aggregated, metrics_aggregated
 
 def main():
-    # Create a temporary model to get initial weights with correct shapes
-    input_shape = 48  # This must match what's in the client data
-    temp_model = create_model(input_shape=(input_shape,))
-    initial_weights = temp_model.get_weights()
+    # Create model to get the correct shape
+    model = create_model(input_shape=(48,))
+    initial_parameters = fl.common.ndarrays_to_parameters(model.get_weights())
 
-    # Log the shapes for debugging
-    initial_shapes = [w.shape for w in initial_weights]
-    logger.info(f"Initial parameter shapes: {initial_shapes}")
-
-    # Convert to Flower parameters
-    initial_parameters = fl.common.ndarrays_to_parameters(initial_weights)
-
-    # Create strategy
+    # Create strategy with the correct initial parameters
     strategy = HeartDiseaseServer(
         fraction_fit=1.0,
         fraction_evaluate=1.0,
@@ -100,4 +93,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
