@@ -1,5 +1,6 @@
 import flwr as fl
-from client import HeartDiseaseClient
+from heart_client import HeartDiseaseClient
+from diabetes_client import DiabetesClient
 import argparse
 import logging
 
@@ -11,12 +12,27 @@ def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description="Start a Flower client")
     parser.add_argument("--client-id", type=int, required=True, help="Client ID")
-    parser.add_argument("--server-address", type=str, default="127.0.0.1:8080", help="Server address")
+    parser.add_argument("--disease-type", type=str, choices=["heart", "diabetes"], required=True,
+                        help="Type of disease to model (heart or diabetes)")
+    parser.add_argument("--server-address", type=str, help="Server address")
     args = parser.parse_args()
 
-    # Create and start client
-    client = HeartDiseaseClient(args.client_id)
-    # Changed from start_client to start_numpy_client to match the implementation in client.py
+    # Set default server address based on disease type if not provided
+    if args.server_address is None:
+        if args.disease_type == "heart":
+            args.server_address = "127.0.0.1:8080"
+        else:  # diabetes
+            args.server_address = "127.0.0.1:8081"
+
+    # Create and start client based on disease type
+    if args.disease_type == "heart":
+        logger.info(f"Starting Heart Disease Client {args.client_id}...")
+        client = HeartDiseaseClient(args.client_id)
+    else:  # diabetes
+        logger.info(f"Starting Diabetes Client {args.client_id}...")
+        client = DiabetesClient(args.client_id)
+
+    # Start client
     fl.client.start_numpy_client(server_address=args.server_address, client=client)
 
 if __name__ == "__main__":
