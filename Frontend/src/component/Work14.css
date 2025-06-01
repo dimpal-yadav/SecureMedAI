@@ -1,0 +1,136 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0a3d4f 0%, #1a2c3c 100%);
+    min-height: 100vh;
+    color: #e0f7ff;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem;
+}
+
+/* Header */
+.header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    margin-bottom: 4rem;
+}
+
+.brand {
+    font-size: 2.8rem;
+    background: linear-gradient(90deg, #00e1ff, #00ffea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1.5px;
+}
+
+/* Statistics Section */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.stat-box {
+    background: rgba(0, 183, 194, 0.15);
+    border: 1px solid rgba(0, 255, 245, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    backdrop-filter: blur(8px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(180deg, #00fff5, #00b7c2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Main Grid */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+}
+
+/* 3D Tracker */
+.tracker-3d {
+    height: 500px;
+    perspective: 1000px;
+    background: rgba(0, 255, 245, 0.05);
+    border-radius: 20px;
+    padding: 2rem;
+}
+
+.donation-cube {
+    width: 250px;
+    height: 250px;
+    transform-style: preserve-3d;
+    animation: cubeRotate 20s infinite linear;
+    position: relative;
+}
+
+.cube-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 255, 245, 0.05);
+    border: 2px solid #00fff5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    backdrop-filter: blur(5px);
+}
+
+/* Project Panel */
+.projects-panel {
+    background: rgba(0, 255, 245, 0.05);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(8px);
+}
+
+.project-item {
+    padding: 1.5rem;
+    margin: 1rem 0;
+    background: rgba(0, 183, 194, 0.15);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 245, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.project-item:hover {
+    transform: translateX(10px);
+}
+
+/* Support Button */
+.support-btn {
+    background: linear-gradient(90deg, #00fff5, #00b7c2);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    color: #1a2c3c;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1rem;
+    float: right;
+}
+
+@keyframes cubeRotate {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(360deg) rotateY(360deg); }
+}

@@ -1,0 +1,144 @@
+/* Background Gradient */
+.contact-section {
+    background: linear-gradient(135deg, #1e293b, #111827);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+  }
+  
+  /* Container */
+  .container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+  }
+  
+  /* Title */
+  .title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 18px;
+    color: #ccc;
+    margin-bottom: 40px;
+  }
+  
+  /* Content Layout */
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  @media (min-width: 768px) {
+    .content {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  
+  /* Left Form Section */
+  .form-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-container label {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .form-container input,
+  .form-container select,
+  .form-container textarea {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .form-container textarea {
+    resize: none;
+    height: 100px;
+  }
+  
+  .form-container button {
+    background: #3b82f6;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+  }
+  
+  .form-container button:hover {
+    background: #2563eb;
+  }
+  
+  /* Right Contact Info Section */
+  .info-container {
+    text-align: left;
+    max-width: 400px;
+  }
+  
+  .info-container h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .info-container p {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  .info-container span {
+    color: #ccc;
+    font-size: 14px;
+  }
+  
+  /* Partnership Box */
+  .partnership-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+  }
+  
+  .partnership-box h3 {
+    font-size: 20px;
+  }
+  
+  .partnership-box p {
+    font-size: 14px;
+    color: #ccc;
+  }
+  
+  .partnership-box a {
+    color: #3b82f6;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  .partnership-box a:hover {
+    color: #2563eb;
+  }
+  

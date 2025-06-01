@@ -1,0 +1,15 @@
+h1.text-3xl.font-bold.text-blue-600 {
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255);
+}
+h2.text-2xl.font-bold.text-gray-700{
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255);
+
+}
+.my-8 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    background-color: rgba(0, 255, 245, 0.05);
+    background: rgba(0, 183, 194, 0.15);
+}

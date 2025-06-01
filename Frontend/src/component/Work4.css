@@ -1,0 +1,48 @@
+
+  
+  .stories-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    
+
+ 
+  }
+
+ 
+  .story-card {
+      /* background: white; */
+      border-radius: 15px;
+      padding: 25px;
+      width: 465px;
+      height: 306px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.5s ease-out;
+      background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
+  }
+  
+  h1 {
+    font-size: 2.9rem;
+    color: #ffffff;
+    margin-bottom: 40px;
+    font-family: 'Arial', sans-serif;
+  }
+  .story-card h2 {
+    font-size: 1.9rem;
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-family: 'Georgia', serif;
+}
+  .app {
+    text-align: center;
+    padding: 40px;
+    /* background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+    min-height: 100vh;
+    background-color:black;
+}

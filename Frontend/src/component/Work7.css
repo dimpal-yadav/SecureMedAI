@@ -1,0 +1,114 @@
+/* General Styles */
+
+
+/* FAQ Section */
+.faq-section {
+    padding: 80px 20px;
+    /* background: linear-gradient(135deg, #6a11cb, #2575fc); */
+    color: #050505;
+    text-align: center;
+    background-color: white;
+}
+.faq-title {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.faq-subtitle {
+    color: #000000;
+}
+
+.faq-container {
+    max-width: 700px;
+    margin: auto;
+}
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.faq-item:hover {
+    background: rgba(110, 43, 43, 0.2);
+}
+
+/* Contact Form */
+#contact{
+    background: linear-gradient(135deg, #000000, #111827);
+    color: white;
+    padding: 1px 0;
+    text-align: center;
+}
+
+.contact-form {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    width: 50%;
+}
+
+.contact-form input, .contact-form select, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+.contact-form button {
+    width: 100%;
+    padding: 10px;
+    background: #3b82f6;
+    border: none;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.contact-form button:hover {
+    background: #2563eb;
+}
+
+/* Footer */
+.footer {
+    background: #10101a;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+}
+
+.footer-links a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.faq-item, .contact-form, .footer {
+    animation: fadeIn 0.8s ease-in-out;
+}
