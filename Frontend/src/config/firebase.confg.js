@@ -4,13 +4,13 @@ import { getAuth } from "firebase/auth";
 
 // Your Firebase project configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAuFKlmvRFpV-pU-UhRIudTWmlMB3g_bhU",
-  authDomain: "email-7c1bf.firebaseapp.com",
-  projectId: "email-7c1bf",
-  storageBucket: "email-7c1bf.firebasestorage.app",
-  messagingSenderId: "241392668015",
-  appId: "1:241392668015:web:bb5e088c7cb0148ee56c9a",
-  measurementId: "G-CH9F8VB5HY"
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+  measurementId: ""
 };
 
 // Initialize Firebase
