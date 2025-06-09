@@ -1,142 +1,109 @@
+# 🩺 Privacy-Preserving Diabetes Prediction using Federated Learning
 
-# Federated Learning for Heart Disease & Diabetes Prediction
-
-This project implements a **Federated Learning (FL)** system using [Flower (FLWR)](https://flower.dev/) to train models collaboratively for **heart disease** and **diabetes** prediction across multiple clients without sharing raw data. It uses **TensorFlow** for modeling and includes synthetic data generation and preprocessing utilities.
-
----
-
-## 🧠 Project Structure
-
-```
-.
-├── Anwarul_TFF.ipynb             # Notebook for testing/training
-├── main.py                       # Launches both heart and diabetes servers
-├── heart_server.py               # FL server logic for heart disease
-├── diabetes_server.py            # FL server logic for diabetes
-├── heart_client.py               # FL client logic for heart disease
-├── diabetes_client.py            # FL client logic for diabetes
-├── data_utils.py                 # Data loading, preprocessing, generation
-├── generate_data.py              # Script to generate synthetic datasets
-├── model.py                      # Model architecture for both diseases
-├── Dataset/
-│   ├── HeartDisease.csv          # Generated heart disease dataset
-│   └── Diabetes.csv              # Generated diabetes dataset
-```
+## 👩‍⚕️ Objective
+To predict diabetes risk using **federated learning**, where multiple hospitals collaborate to train machine learning models **without sharing raw patient data** — preserving privacy while improving prediction performance across a diverse population.
 
 ---
 
-## ⚙️ Setup Instructions
+## 📊 Data Sources
 
-### 1. Install Dependencies
+- **Hospital Groups:**  
+  Large-scale datasets collected from health camps.  
+  ➤ Example: 8,000+ entries per group.
 
-```bash
-pip install tensorflow flwr pandas numpy scikit-learn
-```
-
-### 2. Generate Synthetic Datasets
-
-```bash
-python generate_data.py
-```
-
-This will generate realistic heart disease and diabetes datasets under the `Dataset/` directory.
+- **Individual Hospitals:**  
+  Smaller datasets generated through daily patient interactions.  
+  ➤ Example: ~100 patient records per day.
 
 ---
 
-## 🚀 Running the Federated Servers
+## 🧠 Model Design
 
-### Start Both Servers Simultaneously
+A lightweight **Multi-Layer Perceptron (MLP)** is used, customized for each hospital type:
 
-```bash
-python main.py --disease both
-```
-
-Or individually:
-
-```bash
-python main.py --disease heart
-python main.py --disease diabetes
-```
+| Group      | Task Type          | Output Format                        |
+|------------|--------------------|--------------------------------------|
+| Group A    | Multiclass         | 0 = No Risk, 1 = At Risk, 2 = Diabetic |
+| Group B    | Multiclass (Rare)  | E.g., Type 1 / Type 2 / LADA         |
+| Group C    | Binary Classification | Yes / No                         |
 
 ---
 
-## 🧑‍💻 Running Clients
+## ⚙️ Feature Harmonization
 
-Start clients in separate terminals for each disease.
-
-### Heart Disease Client
-
-```bash
-python heart_client.py --client-id 0
-python heart_client.py --client-id 1
-python heart_client.py --client-id 2
-```
-
-### Diabetes Client
-
-```bash
-python diabetes_client.py --client-id 0
-python diabetes_client.py --client-id 1
-python diabetes_client.py --client-id 2
-```
-
-> ⚠️ Minimum of **3 clients** are required per disease for training to proceed.
+To ensure compatibility across datasets:
+- **Standardize column names:** (e.g., `Age`, `BMI`, `Glucose`)
+- **Map categorical variables:** (e.g., `Gender`: M/F → 0/1)
+- **Unify schema:** Create a common input structure for all models.
 
 ---
 
-## 🧬 Model Architecture
+## 🔄 Federated Learning Workflow
 
-### Heart Disease Model
-- Dense(64) → Dropout(0.2)
-- Dense(32) → Dropout(0.2)
-- Dense(16) → Output(sigmoid)
+1. **Local Training:**  
+   Each hospital trains a local MLP model on its own dataset.
 
-### Diabetes Model
-- Dense(128) → Dropout(0.3)
-- Dense(64) → Dropout(0.3)
-- Dense(32) → Output(sigmoid)
-- Metrics: Accuracy, Precision, Recall
+2. **Model Update Sharing:**  
+   Only the **model weights/gradients** are sent to a central server — **not the raw data**.
 
----
+3. **Aggregation:**  
+   The server aggregates these updates using **FedAvg (Federated Averaging)**.
 
-## 📊 Logs & Metrics
+4. **Global Model Sharing:**  
+   The updated global model is distributed back to all hospitals.
 
-Both clients and servers log:
-- Training & validation loss/accuracy
-- Evaluation metrics
-- Aggregated round metrics
-
-Saved models are stored as:
-- `heart_disease_model_client_<id>.h5`
-- `diabetes_model_client_<id>.h5`
+5. **Repeat:**  
+   The cycle continues for multiple rounds to improve convergence and accuracy.
 
 ---
 
-## 📁 Dataset Details
+## 🌐 Web Platform Overview
 
-Datasets are synthetically generated with controlled randomness and realistic distributions. Each dataset has:
-- Numeric + categorical features
-- Correlated target variables (`HeartDisease`, `Diabetes`)
+**Built using:** `React` (frontend) and `FastAPI` (backend)
 
----
+### 💻 Features:
+- **Data Input Interface:**  
+  Hospitals can enter patient data via forms or CSV uploads.
 
-## 🛠️ Future Enhancements
+- **Model Inference:**  
+  Local model predicts diabetes risk in real-time for the input data.
 
-- Integrate real-world datasets (with consent)
-- Add secure aggregation techniques
-- Visualize model convergence & client drift
-- Experiment with other FL strategies (FedProx, FedYogi)
+- **Secure Storage:**  
+  Predictions and logs are stored securely.
 
----
-
-## 📚 References
-
-- [Flower Framework Documentation](https://flower.dev/docs/)
-- [TensorFlow](https://www.tensorflow.org/)
-- [Federated Learning - Google AI Blog](https://ai.googleblog.com/2017/04/federated-learning-collaborative.html)
+- **Admin Dashboard:**  
+  Monitors:
+  - Model performance metrics
+  - Federated rounds
+  - Hospital participation stats
 
 ---
 
-## 👩‍💻 Author
+## 🔐 Key Advantages
 
-**Anwarul** | *Federated Learning Developer & Data Science Enthusiast*
+- **Privacy-Preserving:**  
+  No sensitive patient data is ever shared outside the hospital.
+
+- **Collaborative Learning:**  
+  Improves prediction accuracy by learning from a wide range of institutions.
+
+- **Scalable & Adaptable:**  
+  Works effectively with both large hospital networks and smaller individual clinics.
+
+---
+
+## 📦 Technologies Used
+
+- **Frontend:** React.js  
+- **Backend:** FastAPI  
+- **ML Framework:** PyTorch / TensorFlow (via Flower for FL)  
+- **Storage:** PostgreSQL / Firebase (optional)  
+- **Federated Learning Library:** Flower (https://flower.dev/)
+
+---
+
+## 🚀 Future Enhancements
+
+- Integrate Secure Aggregation & Differential Privacy
+- Real-time alert system for high-risk patients
+- Add support for other chronic disease predictions
