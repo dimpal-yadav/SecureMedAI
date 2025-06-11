@@ -1,29 +1,6 @@
 # *A comprehensive Hospital Management System API built with Django REST Framework.*
 > Manage users, appointments, prescriptions, medications, and patient records with role-based access for doctors, patients, pharmacists, and admins.
 
----
-
-## 🔗 Live API
-
-The API is deployed on PythonAnywhere for assessment and demonstration.
-
-👉 **[View Live API](https://tsewayo.pythonanywhere.com/)**
-
----
-
-## 📁 Project Structure
-
-```
-hospital_management/
-├── api-documentation.md
-├── manage.py
-├── users/
-├── prescriptions/
-├── appointments/
-├── medications/
-├── patient_records/
-└── hospital_api/
-```
 
 ---
 
@@ -88,8 +65,7 @@ A full list of endpoints and request/response examples can be found in the [API 
 1. **Clone the project**
 
 ```bash
-git clone https://github.com/your-username/hospital-management-api.git
-cd hospital-management-api
+git clone
 ```
 
 2. **Create and activate a virtual environment**
@@ -140,6 +116,7 @@ You can test the endpoints using tools like:
 ## 🧪 Example Usage
 
 ```bash
+
 # Register a user
 POST /api/users/register/
 {
@@ -172,25 +149,5 @@ Headers: Authorization: Token your_token_here
 - Python 3.8+
 - Django 4.x
 - Django REST Framework
-
----
-
-## 🚀 Deployment
-
-Deployed via PythonAnywhere. Follow the [PythonAnywhere Django guide](https://help.pythonanywhere.com/pages/DeployingDjango/) for setup.
-
----
-
-## 📚 License
-
-This project is licensed for educational purposes as part of a capstone project at ALX.
-
----
-
-## 🙋🏾‍♀️ Author
-
-**Gifty Dede Tsewayo**
-Back-end Engineering Student @ ALX Africa & Pharmacy Student
-GitHub: [@dev-dede](https://github.com/dev-dede/)`
 
 ---
