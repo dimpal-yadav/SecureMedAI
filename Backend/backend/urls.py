@@ -1,4 +1,4 @@
-"""hospital-api URL Configuration
+"""backend URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -20,5 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/doctor/', include('doctor.api.urls')),
     path('api/patient/', include('patient.api.urls')),
-    path('api/hospital-admin/', include('hospital-admin.api.urls')),
+    path('api/admin/', include('admin.api.urls')),
 ]

@@ -9,7 +9,7 @@ class DoctorAppointment(admin.TabularInline):
     model = Appointment
 
 
-# hospital-admin.site.register()
+# admin.site.register()
 
 class doctorAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'department', 'address', 'mobile', 'user']

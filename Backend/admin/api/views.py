@@ -23,23 +23,23 @@ class IsAdmin(BasePermission):
     """custom Permission class for Admin"""
 
     def has_permission(self, request, view):
-        return bool(request.user and request.user.groups.filter(name='hospital-admin').exists())
+        return bool(request.user and request.user.groups.filter(name='admin').exists())
 
 
 # Custom Auth token for Admin
 class CustomAuthToken(ObtainAuthToken):
-    """This class returns custom Authentication token only for hospital-admin"""
+    """This class returns custom Authentication token only for admin"""
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        account_approval = user.groups.filter(name='hospital-admin').exists()
+        account_approval = user.groups.filter(name='admin').exists()
         if account_approval == False:
             return Response(
                 {
-                    'message': "You are not authorised to login as an hospital-admin"
+                    'message': "You are not authorised to login as an admin"
                 },
                 status=status.HTTP_403_FORBIDDEN
             )

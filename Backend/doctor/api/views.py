@@ -28,7 +28,7 @@ class CustomAuthToken(ObtainAuthToken):
         if user.status == False:
             return Response(
                 {
-                    'message': "Your account is not approved by hospital-admin yet!"
+                    'message': "Your account is not approved by admin yet!"
                 },
                 status=status.HTTP_403_FORBIDDEN
             )

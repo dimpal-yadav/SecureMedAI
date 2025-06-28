@@ -13,7 +13,7 @@ from .views import (
 
 from django.urls import path
 
-app_name = 'hospital-admin'
+app_name = 'admin'
 urlpatterns = [
     # Admin login
     path('login/', CustomAuthToken.as_view(), name='api_admin_login'),
