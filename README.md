@@ -1,41 +1,95 @@
-# 🩺 Symptom-Based Disease Prediction and EHR System
+# 🛡️ SecureMedAI
 
-A full-stack healthcare application that uses machine learning to predict possible diseases based on symptoms, recommends specialized doctors, and manages patient medical records securely using an integrated Electronic Health Record (EHR) system.
-
----
-
-## 📌 Overview
-
-This project aims to provide users with an intelligent and accessible platform for early disease detection and healthcare management. By entering a list of symptoms, users receive AI-powered predictions of possible illnesses, along with doctor recommendations. It also allows users to maintain a digital health profile and track previous consultations and predictions securely.
+**An AI-powered healthcare platform leveraging machine learning and federated learning to predict diseases, recommend specialized doctors, and manage patient records securely through an integrated Electronic Health Record (EHR) system.**
 
 ---
 
-## 🚀 Key Features
+## 📖 Overview
 
-- **Symptom-Based Disease Prediction**  
-  Uses a trained Random Forest machine learning model to predict the top 3 most likely diseases based on symptoms entered by the user.
-
-- **Doctor Recommendation System**  
-  Recommends doctors based on the predicted disease’s medical specialization.
-
-- **Electronic Health Record (EHR) Module**  
-  Maintains a secure history of past disease predictions, symptoms, recommended doctors, and timestamps.
-
-- **User Authentication**  
-  Secure login, registration, and JWT-based authentication for protected routes.
-
-- **User Profile Management**  
-  Users can view and update their personal information such as name, age, gender, and blood group.
-
-- **API Integration with Frontend**  
-  The backend exposes RESTful APIs consumed by a React-based frontend.
+SecureMedAI is a full-stack healthcare application designed to make early diagnosis and digital health tracking both intelligent and accessible. By analyzing user-reported symptoms, the platform predicts potential diseases, suggests relevant doctors, and maintains a secure, personalized medical history for each user.
 
 ---
 
-## 🧠 Technologies Used
+## 🔑 Core Features
 
-- **Backend**: Django, Django REST Framework  
-- **Frontend**: React.js, Tailwind CSS
-- **Database**: PostgreSQL  
-- **Machine Learning**: Random Forest (scikit-learn), pandas, NumPy  
-- **Authentication**: JWT 
+- ### 🤖 AI-Based Disease Prediction  
+  Input symptoms to receive the **top 3 predicted diseases** using a trained **Random Forest** model.
+
+- ### 👨‍⚕️ Smart Doctor Recommendations  
+  Automatically suggests doctors based on the specialization required for the predicted disease.
+
+- ### 📁 Electronic Health Record (EHR) System  
+  Maintains a **secure, timestamped history** of:
+  - Submitted symptoms  
+  - Predicted diseases  
+  - Doctor recommendations  
+  - Previous user consultations  
+
+- ### 🔐 User Authentication & Security  
+  Implements **JWT-based authentication** for secure login, registration, and access to protected routes.
+
+- ### 🧍‍♂️ Profile Management  
+  Users can view and update their personal details including:
+  - Name  
+  - Age  
+  - Gender  
+  - Blood Group
+
+- ### 🔗 API Integration  
+  A set of RESTful APIs powers seamless integration with the **React.js** frontend.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer        | Technologies                                      |
+|--------------|--------------------------------------------------|
+| **Frontend** | React.js, Tailwind CSS                           |
+| **Backend**  | Django, Django REST Framework                    |
+| **Database** | PostgreSQL                                       |
+| **ML Model** | Random Forest (scikit-learn), pandas, NumPy      |
+| **Auth**     | JWT (JSON Web Tokens)                            |
+
+---
+
+## 📌 Project Goals
+
+- Improve accessibility to healthcare advice using intelligent predictions.  
+- Enhance patient engagement through digital records and self-monitoring.  
+- Ensure **data privacy** and **security** using best practices in EHR handling and federated learning principles.
+
+---
+
+## 🚀 Future Enhancements
+
+- Integration of Federated Learning for decentralized model training.
+- Multi-language support for better accessibility.
+- Real-time chat with doctors via secure video/audio.
+
+---
+
+## 🧑‍💻 Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/SecureMedAI.git
+cd SecureMedAI
+
+# Backend setup (inside /backend directory)
+python -m venv env
+source env/bin/activate  # or env\Scripts\activate on Windows
+pip install -r requirements.txt
+python manage.py runserver
+
+# Frontend setup (inside /frontend directory)
+npm install
+npm start
+```
+
+---
+
+## 📬 Contact
+
+For feedback or queries, feel free to reach out via open an issue in this repo.
+
+---
