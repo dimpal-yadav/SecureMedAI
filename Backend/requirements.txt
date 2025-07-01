@@ -1,4 +1,14 @@
-django==3.0.3
-djangorestframework==3.11.0
+Django
+djangorestframework
+django-filter
 markdown
-autopep8
+pygments
+Pillow
+psycopg2-binary
+dotenv
+djangorestframework-simplejwt
+django-cors-headers
+numpy
+pandas
+scikit-learn==1.6.1
+google-generativeai
