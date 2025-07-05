@@ -66,41 +66,111 @@ class DiseasePredictionView(APIView):
         if "error" in ml_result:
             return Response({"error": ml_result["error"]}, status=status.HTTP_400_BAD_REQUEST)
         
+        # Process all predicted diseases and get doctors for each
+        all_recommended_doctors = []
+        disease_doctors_map = {}
+        
+        for prediction in ml_result['predictions']:
+            disease_name = prediction['disease']
+            probability = prediction['probability']
+            
+            # Try to get the disease from database, create if it doesn't exist
+            try:
+                disease_obj = Disease.objects.get(name__iexact=disease_name)
+            except Disease.DoesNotExist:
+                # Create the disease with a default specialization
+                disease_obj = Disease.objects.create(
+                    name=disease_name,
+                    specialization='general medicine'
+                )
+            
+            # Get doctors for this disease's specialization
+            doctors_for_disease = Doctor.objects.filter(
+                specialization=disease_obj.specialization
+            )[:2]  # Get up to 2 doctors per disease
+            
+            # Add to the map
+            disease_doctors_map[disease_name] = {
+                'disease': disease_obj,
+                'doctors': list(doctors_for_disease),
+                'probability': probability
+            }
+            
+            # Add to all recommended doctors (avoid duplicates)
+            for doctor in doctors_for_disease:
+                if doctor not in all_recommended_doctors:
+                    all_recommended_doctors.append(doctor)
+        
+        # Get the top disease for the main prediction record
         top_disease = ml_result['predictions'][0]['disease']
-        probability = ml_result['predictions'][0]['probability']
+        top_disease_obj = disease_doctors_map[top_disease]['disease']
+        top_probability = ml_result['predictions'][0]['probability']
         
-        disease_obj = Disease.objects.get(name__iexact=top_disease)
-        # Get the first recommended doctor or None if there are no matches
-        recommended_doctor = Doctor.objects.filter(
-            specialization=disease_obj.specialization
-        ).first()
-        
-        # Get disease info from Gemini API
+        # Get disease info from Gemini API for the top disease
         disease_info = get_disease_info(top_disease)
         print("Disease info from Gemini:", disease_info)
         try:
             disease_info = json.loads(disease_info) if disease_info else None
         except json.JSONDecodeError:
             disease_info = None
+        
+        # If Gemini API fails, provide basic disease info
+        if not disease_info:
+            disease_info = {
+                "description": f"{top_disease} is a medical condition that requires professional diagnosis and treatment.",
+                "common_symptoms": ["Please consult with a healthcare professional for accurate symptom assessment"],
+                "prevention_tips": ["Maintain a healthy lifestyle", "Regular check-ups", "Follow medical advice", "Stay hydrated", "Get adequate rest"]
+            }
 
-        # Store the prediction record
+        # Store the prediction record (use first doctor if available)
+        first_doctor = all_recommended_doctors[0] if all_recommended_doctors else None
         prediction = PredictionRecord.objects.create(
             user=request.user,
             symptoms=json.dumps(symptoms),
             predicted_disease_name=top_disease,  
-            predicted_disease=disease_obj, 
-            probability=probability,
-            recommended_doctor=recommended_doctor
+            predicted_disease=top_disease_obj, 
+            probability=top_probability,
+            recommended_doctor=first_doctor
         )
+        
+        # Prepare recommended doctors data with disease associations
+        recommended_doctors_data = []
+        for doctor in all_recommended_doctors:
+            # Find which diseases this doctor specializes in
+            doctor_diseases = []
+            for disease_name, disease_data in disease_doctors_map.items():
+                if doctor in disease_data['doctors']:
+                    doctor_diseases.append({
+                        'name': disease_name,
+                        'probability': disease_data['probability']
+                    })
+            
+            recommended_doctors_data.append({
+                'id': doctor.id,
+                'name': doctor.name,
+                'specialization': doctor.get_specialization_display(),
+                'related_diseases': doctor_diseases
+            })
+        
+        # Prepare disease-specific doctor recommendations
+        disease_doctors_recommendations = {}
+        for disease_name, disease_data in disease_doctors_map.items():
+            disease_doctors_recommendations[disease_name] = [
+                {
+                    'id': doctor.id,
+                    'name': doctor.name,
+                    'specialization': doctor.get_specialization_display(),
+                }
+                for doctor in disease_data['doctors']
+            ]
+        
         response_data = {
             'predicted_disease': ml_result['predictions'],
             'info': disease_info,
             'timestamp': prediction.timestamp.isoformat(),
-            'recommended_doctor': {
-                'id' : recommended_doctor.id,
-                'name': recommended_doctor.name,
-                'specialization': recommended_doctor.get_specialization_display(),
-            } if recommended_doctor else None
+            'recommended_doctors': recommended_doctors_data,
+            'disease_doctors': disease_doctors_recommendations,
+            'recommended_doctor': recommended_doctors_data[0] if recommended_doctors_data else None  # Keep for backward compatibility
         }
         return Response(response_data, status=status.HTTP_200_OK)
     

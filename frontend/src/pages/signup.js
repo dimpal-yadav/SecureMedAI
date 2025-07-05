@@ -23,6 +23,7 @@ export default function Signup() {
         name: data.name,
         age: +data.age,
         gender: data.gender,
+        role: data.role,
         password: data.password,
         password2: data.password2,
       });
@@ -30,7 +31,22 @@ export default function Signup() {
       localStorage.setItem('token', response.data.token.access);
       localStorage.setItem('refreshToken', response.data.token.refresh);
       localStorage.setItem('name', response.data.name.split(' ')[0]);
-      window.location.href = '/';
+      localStorage.setItem('role', response.data.role);
+      
+      // Redirect based on role
+      switch(response.data.role) {
+        case 'PATIENT':
+          window.location.href = '/patient-dashboard';
+          break;
+        case 'DOCTOR':
+          window.location.href = '/doctor-dashboard';
+          break;
+        case 'HOSPITAL_ADMIN':
+          window.location.href = '/admin-dashboard';
+          break;
+        default:
+          window.location.href = '/';
+      }
     } catch (err) {
       console.error(err);
       setError('email', {
@@ -127,6 +143,33 @@ export default function Signup() {
                 {errors.email && (
                   <p className="mt-1 text-xs text-red-500">
                     {errors.email.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Role Selection */}
+              <div className="mb-4">
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5">
+                    <img src="/images/user.png" alt="User icon" />
+                  </div>
+                  <select
+                    className={`w-full rounded-lg border p-2 pl-12 ${
+                      errors.role ? 'border-red-500' : 'border-[#a3a3a3]'
+                    }`}
+                    {...register('role', {
+                      required: 'Please select your role',
+                    })}
+                  >
+                    <option value="">Select Role</option>
+                    <option value="PATIENT">Patient</option>
+                    <option value="DOCTOR">Doctor</option>
+                    <option value="HOSPITAL_ADMIN">Hospital Admin</option>
+                  </select>
+                </div>
+                {errors.role && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.role.message}
                   </p>
                 )}
               </div>

@@ -247,44 +247,126 @@ export default function Prediction() {
           </section>
         )}
 
-        {/* Recommended Doctor */}
-        {predictionResult && predictionResult.recommended_doctor && (
+        {/* Disease-Specific Doctor Recommendations */}
+        {predictionResult && predictionResult.disease_doctors && Object.keys(predictionResult.disease_doctors).length > 0 && (
+          <section className="disease-doctors-section mb-16">
+            <div className="mx-auto max-w-6xl px-4">
+              <div className="title">
+                <h3 className="mb-6 text-2xl font-semibold">
+                  Specialists for Each Condition
+                </h3>
+                <p className="text-gray-600 mb-8">
+                  Find the right specialist for each predicted condition:
+                </p>
+              </div>
+              
+              <div className="space-y-8">
+                {predictionResult.predicted_disease.map((prediction, index) => {
+                  const diseaseName = prediction.disease;
+                  const doctors = predictionResult.disease_doctors[diseaseName] || [];
+                  
+                  return (
+                    <div key={index} className="bg-white rounded-lg border p-6 shadow-lg">
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-xl font-semibold text-blue-600">
+                          {diseaseName}
+                        </h4>
+                        <span className="text-lg font-medium text-gray-700">
+                          {(prediction.probability * 100).toFixed(0)}% probability
+                        </span>
+                      </div>
+                      
+                      {doctors.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {doctors.map((doctor, doctorIndex) => (
+                            <div key={doctorIndex} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                              <div className="flex items-center space-x-3">
+                                <img
+                                  src="/images/doctor.png"
+                                  alt="Doctor"
+                                  width={40}
+                                  height={40}
+                                  className="rounded-full"
+                                />
+                                <div>
+                                  <h5 className="font-medium">{doctor.name}</h5>
+                                  <p className="text-sm text-gray-600">{doctor.specialization}</p>
+                                </div>
+                              </div>
+                              <Link
+                                to={`/appointment?doctorId=${doctor.id}&doctorName=${doctor.name}&doctorSpecialization=${doctor.specialization}`}
+                                className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors"
+                              >
+                                Book
+                              </Link>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-gray-500 italic">No specialists available for this condition.</p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Recommended Doctors */}
+        {predictionResult && predictionResult.recommended_doctors && predictionResult.recommended_doctors.length > 0 && (
           <section className="doctor-section">
             <div className="mx-auto max-w-6xl px-4">
               <div className="title">
                 <h3 className="mb-6 text-2xl font-semibold">
-                  Recommended Doctor
+                  Recommended Doctors
                 </h3>
+                <p className="text-gray-600 mb-8">
+                  Based on your symptoms, here are specialists who can help you:
+                </p>
               </div>
               <div className="mb-8">
-                <div className="w-full rounded-lg border bg-[linear-gradient(to_bottom,#EFF6FF,#FFFFFF)] p-6 shadow-lg md:p-8 lg:w-[60%] flex flex-col md:flex-row md:items-center md:justify-between">
-                  <div className="flex items-center gap-4 md:gap-8 mb-4 md:mb-0">
-                    <div className="relative h-16 w-16">
-                      <img
-                        src="/images/doctor.png"
-                        alt="Doctor"
-                        width={64}
-                        height={64}
-                        className="rounded-full object-cover"
-                      />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {predictionResult.recommended_doctors.map((doctor, index) => (
+                    <div key={doctor.id} className="w-full rounded-lg border bg-[linear-gradient(to_bottom,#EFF6FF,#FFFFFF)] p-6 shadow-lg hover:shadow-xl transition-shadow">
+                      <div className="flex flex-col items-center text-center">
+                        <div className="relative h-16 w-16 mb-4">
+                          <img
+                            src="/images/doctor.png"
+                            alt="Doctor"
+                            width={64}
+                            height={64}
+                            className="rounded-full object-cover"
+                          />
+                        </div>
+                        <div className="details mb-4">
+                          <h5 className="text-lg font-medium mb-2">
+                            {doctor.name}
+                          </h5>
+                          <p className="text-gray-600 text-sm mb-2">
+                            {doctor.specialization}
+                          </p>
+                          {doctor.related_diseases && doctor.related_diseases.length > 0 && (
+                            <div className="text-xs text-blue-600">
+                              <p className="font-medium mb-1">Specializes in:</p>
+                              {doctor.related_diseases.map((disease, idx) => (
+                                <span key={idx} className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded mr-1 mb-1">
+                                  {disease.name} ({(disease.probability * 100).toFixed(0)}%)
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <button className="rounded-2xl bg-green-600 px-4 py-2 text-white hover:bg-green-700 transition-colors">
+                          <Link
+                            to={`/appointment?doctorId=${doctor.id}&doctorName=${doctor.name}&doctorSpecialization=${doctor.specialization}`}
+                          >
+                            Book Appointment
+                          </Link>
+                        </button>
+                      </div>
                     </div>
-                    <div className="details">
-                      <h5 className="text-lg font-medium">
-                        {predictionResult.recommended_doctor.name}
-                      </h5>
-                      <p className="text-gray-600">
-                        {predictionResult.recommended_doctor.specialization}
-                      </p>
-                    </div>
-                  </div>
-
-                  <button className="rounded-2xl bg-green-600 px-4 py-2 text-white hover:bg-green-700">
-                    <Link
-                      to={`/appointment?doctorId=${predictionResult.recommended_doctor.id}&doctorName=${predictionResult.recommended_doctor.name}&doctorSpecialization=${predictionResult.recommended_doctor.specialization}`}
-                    >
-                      Book an appointment
-                    </Link>
-                  </button>
+                  ))}
                 </div>
               </div>
             </div>

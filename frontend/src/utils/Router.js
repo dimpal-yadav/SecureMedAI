@@ -9,6 +9,9 @@ import Signup from '../Pages/signup';
 import PatientProfle from '../Pages/patient-profile';
 import MedicalHistory from '../Pages/medical-history';
 import AppointmentHistory from '../Pages/appoint-history';
+import PatientPage from '../Pages/PatientPage';
+import DoctorPage from '../Pages/DoctorPage';
+import AdminPage from '../Pages/AdminPage';
 import ProtectedRoute from './ProtectedRoute';
 
 const Router=()=> {
@@ -27,6 +30,11 @@ const Router=()=> {
           <Route path="/medical-history" element={<MedicalHistory />} />
           <Route path="/appoint-history" element={<AppointmentHistory />} />
           <Route path="/appointment" element={<Appointment />} />
+          
+          {/* Role-based dashboard routes */}
+          <Route path="/patient-dashboard" element={<PatientPage />} />
+          <Route path="/doctor-dashboard" element={<DoctorPage />} />
+          <Route path="/admin-dashboard" element={<AdminPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

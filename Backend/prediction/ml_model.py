@@ -41,3 +41,22 @@ def predict_disease(symptoms):
         ]
     }
     return output
+
+
+
+
+
+
+
+# # Running Sample Predictions
+
+# symptoms_sample = [
+#     ["abdominal_pain","shivering","chill","watering_from_eyes","continuous_sneeezing"],
+#     ["acidity","indigestion","headache","blurred_and_distorted_vision","irritability"],
+#     ["itching","vomiting","fatigue","yellowish_skin","abdominal_pain","dark_urine"]
+# ]
+
+# for symptoms in symptoms_sample:
+#     print(f"Symptoms: {symptoms}")
+#     print("Predictions:", predict_disease(symptoms))
+#     print('\n')

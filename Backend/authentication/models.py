@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
             password=password,
             age=30,  
             gender='M', 
-            role='ADMIN',
+            role='HOSPITAL_ADMIN',
             blood_group='', 
         )
         user.is_admin = True
@@ -49,8 +49,12 @@ class User(AbstractBaseUser):
 
     age = models.PositiveIntegerField(blank=True, null=True)
     
-    ROLE_CHOICES = [('PATIENT', 'Patient'), ('ADMIN', 'Admin')]
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='PATIENT')
+    ROLE_CHOICES = [
+        ('PATIENT', 'Patient'), 
+        ('DOCTOR', 'Doctor'), 
+        ('HOSPITAL_ADMIN', 'Hospital Admin')
+    ]
+    role = models.CharField(max_length=15, choices=ROLE_CHOICES, default='PATIENT')
     
     BLOOD_GROUP_CHOICES = [
         ('A+', 'A+'), ('A-', 'A-'), ('B+', 'B+'), ('B-', 'B-'),

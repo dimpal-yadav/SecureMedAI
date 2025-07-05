@@ -11,7 +11,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type':'password'} , write_only=True)
     class Meta:
         model = User
-        fields = ['email','name','age','gender','password','password2']
+        fields = ['email','name','age','gender','role','password','password2']
         extra_kwargs = {
             'password' :{'write_only':True}
         }
@@ -40,7 +40,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id','email','name','gender','age','blood_group','is_active','registered_date']
+        fields = ['id','email','name','gender','age','blood_group','role','is_active','registered_date']
 
 
 class ChangeUserPasswordSerializer(serializers.Serializer):
