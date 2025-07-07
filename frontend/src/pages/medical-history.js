@@ -1,10 +1,16 @@
 import Navbar from '../Components/Navbar';
 import ProfieSidebar from '../Components/ProfileSidebar';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import useAxios from '../Utils/axios';
 import { getBaseURL } from '../apiConfig';
 
 function MedicalHistory() {
+  const axiosInstance = useAxios();
+
+  // Check if user is authenticated
+  const token = localStorage.getItem('token');
+  const userRole = localStorage.getItem('role');
+
   const {
     data: history = [],
     isLoading,
@@ -12,17 +18,30 @@ function MedicalHistory() {
   } = useQuery({
     queryKey: ['medicalHistory'],
     queryFn: async () => {
-      const response = await axios.get(
-        `${getBaseURL()}/user/predictionhistory/`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        }
-      );
+      // Check if token exists
+      if (!token) {
+        throw new Error('No authentication token found. Please login again.');
+      }
+
+      const response = await axiosInstance.get('/predictionhistory/');
       return response.data.data; // Assuming your API returns { data: [...] }
     },
+    enabled: !!token, // Only run query if token exists
   });
+
+  // If no token, show login message
+  if (!token) {
+    return (
+      <div>
+        <div className="nav">
+          <Navbar />
+        </div>
+        <div className="text-center py-10">
+          <p className="text-red-500">Please login to view your medical history.</p>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -35,7 +54,9 @@ function MedicalHistory() {
   if (error) {
     return (
       <div className="text-center py-10 text-red-500">
-        Error: {error.message}
+        <p>Error: {error.message}</p>
+        <p className="text-sm mt-2">Token: {token ? 'Present' : 'Missing'}</p>
+        <p className="text-sm">Role: {userRole || 'Not set'}</p>
       </div>
     );
   }

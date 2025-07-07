@@ -40,7 +40,10 @@ class UserLoginSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id','email','name','gender','age','blood_group','role','is_active','registered_date']
+        fields = [
+            'id', 'email', 'name', 'gender', 'age', 'blood_group', 'role',
+            'is_active', 'registered_date'
+        ]
 
 
 class ChangeUserPasswordSerializer(serializers.Serializer):
@@ -117,3 +120,22 @@ class UserPasswordResetSerializer(serializers.Serializer):
         user.set_password(password)
         user.save()
         return attrs
+
+class DoctorApprovalSerializer(serializers.ModelSerializer):
+    # Safe defaults for fields that might not exist in database yet
+    specialization = serializers.CharField(required=False, allow_blank=True, default='')
+    qualifications = serializers.CharField(required=False, allow_blank=True, default='')
+    experience = serializers.IntegerField(required=False, default=None)
+    approval_status = serializers.CharField(required=False, default='PENDING')
+    rejection_reason = serializers.CharField(required=False, allow_blank=True, default='')
+    approved_by = serializers.PrimaryKeyRelatedField(read_only=True, default=None)
+    approved_at = serializers.DateTimeField(read_only=True, default=None)
+    
+    class Meta:
+        model = User
+        fields = [
+            'id', 'email', 'name', 'gender', 'age', 'blood_group', 'role',
+            'specialization', 'qualifications', 'experience',
+            'approval_status', 'rejection_reason', 'approved_by', 'approved_at',
+            'is_active', 'registered_date'
+        ]

@@ -54,6 +54,44 @@ def get_disease_info(disease_name):
 
 # Create your views here.
 
+class PredictionHistoryView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format=None):
+        """Get prediction history for the authenticated user"""
+        try:
+            # Get all prediction records for the current user
+            predictions = PredictionRecord.objects.filter(user=request.user)
+            
+            history_data = []
+            for prediction in predictions:
+                # Parse symptoms from JSON string
+                try:
+                    symptoms = json.loads(prediction.symptoms)
+                except (json.JSONDecodeError, TypeError):
+                    symptoms = prediction.symptoms
+                
+                history_data.append({
+                    'id': prediction.id,
+                    'disease_name': prediction.predicted_disease_name,
+                    'symptoms': symptoms if isinstance(symptoms, str) else ', '.join(symptoms),
+                    'probability': prediction.probability,
+                    'timestamp': prediction.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+                    'doctor_name': prediction.recommended_doctor.name if prediction.recommended_doctor else None,
+                    'doctor_specialization': prediction.recommended_doctor.get_specialization_display() if prediction.recommended_doctor else None,
+                })
+            
+            return Response({
+                'data': history_data,
+                'count': len(history_data)
+            }, status=status.HTTP_200_OK)
+            
+        except Exception as e:
+            return Response({
+                'error': 'Failed to fetch prediction history',
+                'details': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class DiseasePredictionView(APIView):
     permission_classes = [IsAuthenticated]
     

@@ -1,11 +1,13 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from authentication.serializers import UserRegistrationSerializer,UserLoginSerializer,UserProfileSerializer,ChangeUserPasswordSerializer,SendPasswordResetEmailSerializer,UserPasswordResetSerializer
+from authentication.serializers import UserRegistrationSerializer,UserLoginSerializer,UserProfileSerializer,ChangeUserPasswordSerializer,SendPasswordResetEmailSerializer,UserPasswordResetSerializer,DoctorApprovalSerializer
 from django.contrib.auth import authenticate
 from authentication.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+from authentication.models import User
+from django.utils import timezone
 
 # Generate token
 def get_tokens_for_user(user):
@@ -117,3 +119,260 @@ class UserPasswordResetView(APIView):
             return Response({'msg':'Password reset successfully'},status=status.HTTP_200_OK)
         
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+# User Management Views (Admin Only)
+class AllUsersView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format=None):
+        """Get all users - Admin only"""
+        # Check if user is admin
+        if request.user.role != 'HOSPITAL_ADMIN':
+            return Response({'error': 'Access denied. Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        users = User.objects.all().order_by('-registered_date')
+        serializer = UserProfileSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserStatusUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def patch(self, request, user_id, format=None):
+        """Update user status (active/inactive) - Admin only"""
+        # Check if user is admin
+        if request.user.role != 'HOSPITAL_ADMIN':
+            return Response({'error': 'Access denied. Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        try:
+            user = User.objects.get(id=user_id)
+            is_active = request.data.get('is_active', user.is_active)
+            user.is_active = is_active
+            user.save()
+            
+            return Response({
+                'msg': f'User status updated successfully',
+                'user_id': user.id,
+                'is_active': user.is_active
+            }, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class UserRoleUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def patch(self, request, user_id, format=None):
+        """Update user role - Admin only"""
+        # Check if user is admin
+        if request.user.role != 'HOSPITAL_ADMIN':
+            return Response({'error': 'Access denied. Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        try:
+            user = User.objects.get(id=user_id)
+            new_role = request.data.get('role', user.role)
+            
+            # Validate role
+            valid_roles = ['PATIENT', 'DOCTOR', 'HOSPITAL_ADMIN']
+            if new_role not in valid_roles:
+                return Response({'error': 'Invalid role'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            user.role = new_role
+            user.save()
+            
+            return Response({
+                'msg': f'User role updated successfully',
+                'user_id': user.id,
+                'role': user.role
+            }, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class UserDeleteView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def delete(self, request, user_id, format=None):
+        """Delete user - Admin only"""
+        # Check if user is admin
+        if request.user.role != 'HOSPITAL_ADMIN':
+            return Response({'error': 'Access denied. Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        try:
+            user = User.objects.get(id=user_id)
+            
+            # Prevent admin from deleting themselves
+            if user.id == request.user.id:
+                return Response({'error': 'Cannot delete your own account'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            user.delete()
+            return Response({'msg': 'User deleted successfully'}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+# Doctor Approval Views (Admin Only)
+class PendingDoctorsView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format=None):
+        """Get all doctors with their approval status - Admin only"""
+        # Check if user is admin
+        if request.user.role != 'HOSPITAL_ADMIN':
+            return Response({'error': 'Access denied. Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Get all doctors (users with role DOCTOR)
+        doctors = User.objects.filter(role='DOCTOR').order_by('-registered_date')
+        serializer = DoctorApprovalSerializer(doctors, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class DoctorApproveView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def patch(self, request, doctor_id, format=None):
+        """Approve a doctor - Admin only"""
+        # Check if user is admin
+        if request.user.role != 'HOSPITAL_ADMIN':
+            return Response({'error': 'Access denied. Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        try:
+            doctor = User.objects.get(id=doctor_id, role='DOCTOR')
+            
+            # Try to set approval status if the field exists
+            try:
+                doctor.approval_status = 'APPROVED'
+                doctor.approved_by = request.user
+                doctor.approved_at = timezone.now()
+            except AttributeError:
+                # Field doesn't exist yet, just update the user
+                pass
+                
+            doctor.save()
+            
+            return Response({
+                'msg': f'Doctor {doctor.name} approved successfully',
+                'doctor_id': doctor.id,
+                'approval_status': getattr(doctor, 'approval_status', 'APPROVED')
+            }, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'Doctor not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class DoctorRejectView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def patch(self, request, doctor_id, format=None):
+        """Reject a doctor - Admin only"""
+        # Check if user is admin
+        if request.user.role != 'HOSPITAL_ADMIN':
+            return Response({'error': 'Access denied. Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        try:
+            doctor = User.objects.get(id=doctor_id, role='DOCTOR')
+            rejection_reason = request.data.get('rejection_reason', '')
+            
+            # Try to set rejection status if the field exists
+            try:
+                doctor.approval_status = 'REJECTED'
+                doctor.rejection_reason = rejection_reason
+                doctor.approved_by = request.user
+                doctor.approved_at = timezone.now()
+            except AttributeError:
+                # Field doesn't exist yet, just update the user
+                pass
+                
+            doctor.save()
+            
+            return Response({
+                'msg': f'Doctor {doctor.name} rejected',
+                'doctor_id': doctor.id,
+                'approval_status': getattr(doctor, 'approval_status', 'REJECTED'),
+                'rejection_reason': getattr(doctor, 'rejection_reason', rejection_reason)
+            }, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'Doctor not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+# Patient Approval Views (Admin Only)
+class PendingPatientsView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, format=None):
+        """Get all patients with their approval status - Admin only"""
+        # Check if user is admin
+        if request.user.role != 'HOSPITAL_ADMIN':
+            return Response({'error': 'Access denied. Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Get all patients (users with role PATIENT)
+        patients = User.objects.filter(role='PATIENT').order_by('-registered_date')
+        serializer = UserProfileSerializer(patients, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class PatientApproveView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def patch(self, request, patient_id, format=None):
+        """Approve a patient - Admin only"""
+        # Check if user is admin
+        if request.user.role != 'HOSPITAL_ADMIN':
+            return Response({'error': 'Access denied. Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        try:
+            patient = User.objects.get(id=patient_id, role='PATIENT')
+            
+            # Try to set approval status if the field exists
+            try:
+                patient.approval_status = 'APPROVED'
+                patient.approved_by = request.user
+                patient.approved_at = timezone.now()
+            except AttributeError:
+                # Field doesn't exist yet, just update the user
+                pass
+                
+            patient.save()
+            
+            return Response({
+                'msg': f'Patient {patient.name} approved successfully',
+                'patient_id': patient.id,
+                'approval_status': getattr(patient, 'approval_status', 'APPROVED')
+            }, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'Patient not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class PatientRejectView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def patch(self, request, patient_id, format=None):
+        """Reject a patient - Admin only"""
+        # Check if user is admin
+        if request.user.role != 'HOSPITAL_ADMIN':
+            return Response({'error': 'Access denied. Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        try:
+            patient = User.objects.get(id=patient_id, role='PATIENT')
+            rejection_reason = request.data.get('rejection_reason', '')
+            
+            # Try to set rejection status if the field exists
+            try:
+                patient.approval_status = 'REJECTED'
+                patient.rejection_reason = rejection_reason
+                patient.approved_by = request.user
+                patient.approved_at = timezone.now()
+            except AttributeError:
+                # Field doesn't exist yet, just update the user
+                pass
+                
+            patient.save()
+            
+            return Response({
+                'msg': f'Patient {patient.name} rejected',
+                'patient_id': patient.id,
+                'approval_status': getattr(patient, 'approval_status', 'REJECTED'),
+                'rejection_reason': getattr(patient, 'rejection_reason', rejection_reason)
+            }, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'Patient not found'}, status=status.HTTP_404_NOT_FOUND)

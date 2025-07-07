@@ -62,6 +62,32 @@ class User(AbstractBaseUser):
     ]
     blood_group = models.CharField(max_length=3, choices=BLOOD_GROUP_CHOICES, blank=True, null=True)
 
+    # Doctor-specific fields
+    specialization = models.CharField(max_length=100, blank=True, null=True)
+    qualifications = models.TextField(blank=True, null=True)
+    experience = models.PositiveIntegerField(blank=True, null=True, help_text="Years of experience")
+    
+    # Approval status for doctors
+    APPROVAL_STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('APPROVED', 'Approved'),
+        ('REJECTED', 'Rejected'),
+    ]
+    approval_status = models.CharField(
+        max_length=10, 
+        choices=APPROVAL_STATUS_CHOICES, 
+        default='PENDING'
+    )
+    rejection_reason = models.TextField(blank=True, null=True)
+    approved_by = models.ForeignKey(
+        'self', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        related_name='approved_doctors'
+    )
+    approved_at = models.DateTimeField(null=True, blank=True)
+
     registered_date = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
