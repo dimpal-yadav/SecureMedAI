@@ -93,3 +93,20 @@ npm start
 For feedback or queries, feel free to reach out via open an issue in this repo.
 
 ---
+
+## 🖼️ Output Screenshots
+
+Below are some screenshots demonstrating the output and UI of SecureMedAI:
+
+| Screenshot |
+|------------|
+| ![Screenshot 2025-07-07 141924](screenshots/Screenshot%202025-07-07%20141924.png) |
+| ![Screenshot 2025-07-07 141936](screenshots/Screenshot%202025-07-07%20141936.png) |
+| ![Screenshot 2025-07-07 142004](screenshots/Screenshot%202025-07-07%20142004.png) |
+| ![Screenshot 2025-07-07 142040](screenshots/Screenshot%202025-07-07%20142040.png) |
+| ![Screenshot 2025-07-07 142112](screenshots/Screenshot%202025-07-07%20142112.png) |
+| ![Screenshot 2025-07-07 142130](screenshots/Screenshot%202025-07-07%20142130.png) |
+| ![Screenshot 2025-07-07 142247](screenshots/Screenshot%202025-07-07%20142247.png) |
+| ![Screenshot 2025-07-07 142325](screenshots/Screenshot%202025-07-07%20142325.png) |
+
+---

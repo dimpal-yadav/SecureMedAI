@@ -66,7 +66,7 @@ function Footer(){
 
             <div className="bottom-footer mt-16 pb-12 mr-5 flex justify-between items-end">
               <div className="copyright">
-                <p>© 2025 HealthVault. All rights reserved.</p>
+                <p>© 2025 secure_med_ai. All rights reserved.</p>
               </div>
               <div className="social">
                 <h5 className="mb-8">Social</h5>

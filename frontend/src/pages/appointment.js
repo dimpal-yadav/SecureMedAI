@@ -169,7 +169,7 @@ function Appointment() {
                     href="mailto:hello@gmail.com"
                     className="text-blue-600 hover:underline"
                   >
-                    healthvault@gmail.com
+                    secure_med_ai@gmail.com
                   </a>
                 </p>
               </div>

@@ -36,7 +36,7 @@ function Navbar(){
           <div className="header-item">
             <h4 className="font-bold">
               <Link to="/" className="nav-link">
-                HealthVault
+                secure_med_ai
               </Link>
             </h4>
           </div>

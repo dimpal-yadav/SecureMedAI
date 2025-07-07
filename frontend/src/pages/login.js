@@ -207,12 +207,12 @@ export default function Login() {
                     <div>
                       <h5 className="text-xs font-medium text-blue-600 mb-1">Patient Access</h5>
                       <div className="text-xs text-gray-600">
-                        <p><strong>Email:</strong> patient@healthvault.com</p>
+                        <p><strong>Email:</strong> patient@secure_med_ai.com</p>
                         <p><strong>Password:</strong> patient123</p>
                       </div>
                     </div>
                     <button
-                      onClick={() => copyCredentials('patient', 'patient@healthvault.com', 'patient123')}
+                      onClick={() => copyCredentials('patient', 'patient@secure_med_ai.com', 'patient123')}
                       className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
                     >
                       {copiedRole === 'patient' ? 'Copied!' : 'Copy'}
@@ -226,12 +226,12 @@ export default function Login() {
                     <div>
                       <h5 className="text-xs font-medium text-green-600 mb-1">Doctor Access</h5>
                       <div className="text-xs text-gray-600">
-                        <p><strong>Email:</strong> doctor@healthvault.com</p>
+                        <p><strong>Email:</strong> doctor@secure_med_ai.com</p>
                         <p><strong>Password:</strong> doctor123</p>
                       </div>
                     </div>
                     <button
-                      onClick={() => copyCredentials('doctor', 'doctor@healthvault.com', 'doctor123')}
+                      onClick={() => copyCredentials('doctor', 'doctor@secure_med_ai.com', 'doctor123')}
                       className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded hover:bg-green-200 transition-colors"
                     >
                       {copiedRole === 'doctor' ? 'Copied!' : 'Copy'}
@@ -245,12 +245,12 @@ export default function Login() {
                     <div>
                       <h5 className="text-xs font-medium text-purple-600 mb-1">Hospital Admin Access</h5>
                       <div className="text-xs text-gray-600">
-                        <p><strong>Email:</strong> admin@healthvault.com</p>
+                        <p><strong>Email:</strong> admin@secure_med_ai.com</p>
                         <p><strong>Password:</strong> admin123</p>
                       </div>
                     </div>
                     <button
-                      onClick={() => copyCredentials('admin', 'admin@healthvault.com', 'admin123')}
+                      onClick={() => copyCredentials('admin', 'admin@secure_med_ai.com', 'admin123')}
                       className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded hover:bg-purple-200 transition-colors"
                     >
                       {copiedRole === 'admin' ? 'Copied!' : 'Copy'}

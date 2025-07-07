@@ -27,7 +27,7 @@ function Contact() {
                 </p>
               </div>
               <div className="details text-sm md:text-base">
-                <p className="mb-2">healthvault@gmail.com</p>
+                <p className="mb-2">secure_med_ai@gmail.com</p>
                 <p className="mb-6 md:mb-8">+977-9800000000</p>
               </div>
               <div className="logo flex gap-4 md:gap-6 mb-10 lg:mb-0">

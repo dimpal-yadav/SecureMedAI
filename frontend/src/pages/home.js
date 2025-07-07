@@ -133,7 +133,7 @@ function Home() {
                 About Us
               </h2>
               <p>
-                At HealthVault, we believe in transforming healthcare through
+                At secure_med_ai, we believe in transforming healthcare through
                 the power of technology. Our platform combines intelligent
                 disease prediction, secure electronic health record (EHR)
                 management, and personalized doctor recommendations to provide
@@ -158,7 +158,7 @@ function Home() {
             <div className="image-container w-full lg:w-[45%] order-1 lg:order-2">
               <img
                 src="/images/aboutus.jpg"
-                alt="About HealthVault"
+                alt="About secure_med_ai"
                 className="w-full h-auto md:h-[350px] lg:h-[450px] object-cover rounded-lg opacity-90"
               />
             </div>
