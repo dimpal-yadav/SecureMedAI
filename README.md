@@ -1,112 +1,90 @@
-# 🛡️ SecureMedAI
+# SecureMedAI
 
-**An AI-powered healthcare platform leveraging machine learning and federated learning to predict diseases, recommend specialized doctors, and manage patient records securely through an integrated Electronic Health Record (EHR) system.**
-
----
-
-## 📖 Overview
-
-SecureMedAI is a full-stack healthcare application designed to make early diagnosis and digital health tracking both intelligent and accessible. By analyzing user-reported symptoms, the platform predicts potential diseases, suggests relevant doctors, and maintains a secure, personalized medical history for each user.
+SecureMedAI is an AI-powered healthcare web platform that allows patients to predict possible diseases based on symptoms and seamlessly book appointments with specialized doctors. Built with a focus on real-time dashboards, smart doctor matching, and a user-centric experience.
 
 ---
 
-## 🔑 Core Features
+## Overview
 
-- ### 🤖 AI-Based Disease Prediction  
-  Input symptoms to receive the **top 3 predicted diseases** using a trained **Random Forest** model.
+SecureMedAI bridges the gap between intelligent diagnosis and timely medical care. Patients receive instant predictions based on symptoms and are connected with top-rated, relevant doctors. Doctors manage appointments and access patient history, while admins oversee the platform.
 
-- ### 👨‍⚕️ Smart Doctor Recommendations  
-  Automatically suggests doctors based on the specialization required for the predicted disease.
+The platform incorporates machine learning models tailored to user roles:
 
-- ### 📁 Electronic Health Record (EHR) System  
-  Maintains a **secure, timestamped history** of:
-  - Submitted symptoms  
-  - Predicted diseases  
-  - Doctor recommendations  
-  - Previous user consultations  
-
-- ### 🔐 User Authentication & Security  
-  Implements **JWT-based authentication** for secure login, registration, and access to protected routes.
-
-- ### 🧍‍♂️ Profile Management  
-  Users can view and update their personal details including:
-  - Name  
-  - Age  
-  - Gender  
-  - Blood Group
-
-- ### 🔗 API Integration  
-  A set of RESTful APIs powers seamless integration with the **React.js** frontend.
+- **Patients** use a **Random Forest** model for client-side, symptom-based disease prediction.
+- **Doctors** utilize **Federated Learning** for privacy-preserving, collaborative diagnosis improvement across distributed data sources.
 
 ---
 
-## 🛠️ Tech Stack
+## Features
 
-| Layer        | Technologies                                      |
-|--------------|--------------------------------------------------|
-| **Frontend** | React.js, Tailwind CSS                           |
-| **Backend**  | Django, Django REST Framework                    |
-| **Database** | PostgreSQL                                       |
-| **ML Model** | Random Forest (scikit-learn), pandas, NumPy      |
-| **Auth**     | JWT (JSON Web Tokens)                            |
+### User Roles
 
----
+- **Patient**:  
+  - Symptom-based disease prediction using Random Forest  
+  - Book appointments  
+  - Rate doctors  
+  - Chat securely  
 
-## 📌 Project Goals
+- **Doctor**:  
+  - Predict diseases using Federated Learning  
+  - View and manage appointments  
+  - Access patient information  
+  - Communicate securely with patients  
+  - Receive ratings  
 
-- Improve accessibility to healthcare advice using intelligent predictions.  
-- Enhance patient engagement through digital records and self-monitoring.  
-- Ensure **data privacy** and **security** using best practices in EHR handling and federated learning principles.
-
----
-
-## 🚀 Future Enhancements
-
-- Integration of Federated Learning for decentralized model training.
-- Multi-language support for better accessibility.
-- Real-time chat with doctors via secure video/audio.
+- **Admin**:  
+  - Manage platform users, doctors, and feedback  
+  - View analytics and monitor system activity  
 
 ---
 
-## 🧑‍💻 Getting Started
+### Core Functionality
+
+- Authentication and onboarding flow for Patients, Doctors, and Admins  
+- AI-based disease prediction  
+  - Random Forest (Patient-side)  
+  - Federated Learning (Doctor-side)  
+- Doctor appointment booking system  
+- Doctor ratings and specialization filtering  
+- Smart doctor matching based on prediction, rating, and availability  
+- Advanced doctor search by:  
+  - Experience  
+  - Availability  
+  - Languages spoken  
+- Secure patient-doctor chat system  
+- Real-time role-based dashboard  
+- Mobile-responsive UI with a modern design  
+
+---
+
+## Tech Stack
+
+| Layer            | Technology                       |
+|------------------|----------------------------------|
+| Frontend         | React.js, Tailwind CSS           |
+| Backend          | Django REST Framework            |
+| Database         | PostgreSQL / SQLite              |
+| Authentication   | JWT, Django Authentication       |
+| Charts           | Recharts, Chart.js               |
+| ML Models        | Random Forest, Federated Learning|
+
+---
+
+
+## ⚙️ Installation & Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/SecureMedAI.git
-cd SecureMedAI
+git clone ""
+cd medipredict
 
-# Backend setup (inside /backend directory)
-python -m venv env
-source env/bin/activate  # or env\Scripts\activate on Windows
-pip install -r requirements.txt
-python manage.py runserver
-
-# Frontend setup (inside /frontend directory)
+# Frontend setup
+cd frontend
 npm install
 npm start
-```
 
----
-
-## 📬 Contact
-
-For feedback or queries, feel free to reach out via open an issue in this repo.
-
----
-
-## 🖼️ Output Screenshots
-
-Below are some screenshots demonstrating the output and UI of SecureMedAI:
-
-| Screenshot |
-|------------|
-| ![Screenshot 2025-07-07 141924](screenshots/Screenshot%202025-07-07%20141924.png) |
-| ![Screenshot 2025-07-07 141936](screenshots/Screenshot%202025-07-07%20141936.png) |
-| ![Screenshot 2025-07-07 142004](screenshots/Screenshot%202025-07-07%20142004.png) |
-| ![Screenshot 2025-07-07 142040](screenshots/Screenshot%202025-07-07%20142040.png) |
-| ![Screenshot 2025-07-07 142112](screenshots/Screenshot%202025-07-07%20142112.png) |
-| ![Screenshot 2025-07-07 142130](screenshots/Screenshot%202025-07-07%20142130.png) |
-| ![Screenshot 2025-07-07 142247](screenshots/Screenshot%202025-07-07%20142247.png) |
-| ![Screenshot 2025-07-07 142325](screenshots/Screenshot%202025-07-07%20142325.png) |
-
----
+# Backend setup
+cd backend
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
