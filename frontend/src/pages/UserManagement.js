@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../Utils/axios';
-import Navbar from '../Components/Navbar';
-import Footer from '../Components/Footer';
+import useAxios from '../utils/axios';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const UserManagement = () => {
   const axiosInstance = useAxios();

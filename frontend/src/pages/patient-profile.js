@@ -1,5 +1,5 @@
-import Navbar from '../Components/Navbar';
-import ProfieSidebar from '../Components/ProfileSidebar';
+import Navbar from '../components/Navbar';
+import ProfieSidebar from '../components/ProfileSidebar';
 import axios from 'axios';
 import { useState } from 'react';
 import { getBaseURL } from '../apiConfig';

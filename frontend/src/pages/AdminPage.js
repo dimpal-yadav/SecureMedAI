@@ -1,7 +1,7 @@
 import React from 'react';
-import AdminDashboard from '../Components/admin/AdminDashboard';
-import Navbar from '../Components/Navbar';
-import Footer from '../Components/Footer';
+import AdminDashboard from '../components/admin/AdminDashboard';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const AdminPage = () => {
   return (

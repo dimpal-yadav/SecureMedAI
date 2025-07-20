@@ -1,5 +1,5 @@
-import Navbar from '../Components/Navbar';
-import Footer from '../Components/Footer';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';

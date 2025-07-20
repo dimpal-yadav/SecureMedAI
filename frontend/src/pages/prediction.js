@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { getBaseURL } from '../apiConfig';
-import Navbar from '../Components/Navbar';
-import Footer from '../Components/Footer';
-import useAxios from '../Utils/axios';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import useAxios from '../utils/axios';
 
 export default function Prediction() {
   const [symptoms, setSymptoms] = useState([]);

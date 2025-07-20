@@ -1,20 +1,20 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from '../Pages/home';
-import Contact from '../Pages/contact';
-import Prediction from '../Pages/prediction';
-import Doctors from '../Pages/doctors';
-import Appointment from '../Pages/appointment';
-import Login from '../Pages/login';
-import Signup from '../Pages/signup';
-import PatientProfle from '../Pages/patient-profile';
-import MedicalHistory from '../Pages/medical-history';
-import AppointmentHistory from '../Pages/appoint-history';
-import PatientPage from '../Pages/PatientPage';
-import DoctorPage from '../Pages/DoctorPage';
-import AdminPage from '../Pages/AdminPage';
-import UserManagement from '../Pages/UserManagement';
-import DoctorApproval from '../Pages/DoctorApproval';
-import PatientApproval from '../Pages/PatientApproval';
+import Home from '../pages/home';
+import Contact from '../pages/contact';
+import Prediction from '../pages/prediction';
+import Doctors from '../pages/doctors';
+import Appointment from '../pages/appointment';
+import Login from '../pages/login';
+import Signup from '../pages/signup';
+import PatientProfle from '../pages/patient-profile';
+import MedicalHistory from '../pages/medical-history';
+import AppointmentHistory from '../pages/appoint-history';
+import PatientPage from '../pages/PatientPage';
+import DoctorPage from '../pages/DoctorPage';
+import AdminPage from '../pages/AdminPage';
+import UserManagement from '../pages/UserManagement';
+import DoctorApproval from '../pages/DoctorApproval';
+import PatientApproval from '../pages/PatientApproval';
 import ProtectedRoute from './ProtectedRoute';
 
 const Router=()=> {

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import useAxios from '../Utils/axios';
-import Navbar from '../Components/Navbar';
-import Footer from '../Components/Footer';
+import useAxios from '../utils/axios';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const PatientApproval = () => {
   const axiosInstance = useAxios();

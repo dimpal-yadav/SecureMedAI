@@ -1,8 +1,8 @@
-import Navbar from '../Components/Navbar';
-import ProfieSidebar from '../Components/ProfileSidebar';
+import Navbar from '../components/Navbar';
+import ProfieSidebar from '../components/ProfileSidebar';
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../Utils/axios';
-import { getBaseURL } from '../apiConfig';
+import useAxios from '../utils/axios';
+// import { getBaseURL } from '../apiConfig';
 
 function MedicalHistory() {
   const axiosInstance = useAxios();

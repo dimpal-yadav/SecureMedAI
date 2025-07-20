@@ -1,5 +1,5 @@
-import Navbar from '../Components/Navbar';
-import ProfieSidebar from '../Components/ProfileSidebar';
+import Navbar from '../components/Navbar';
+import ProfieSidebar from '../components/ProfileSidebar';
 import axios from 'axios';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getBaseURL } from '../apiConfig';

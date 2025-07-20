@@ -1,7 +1,7 @@
 import React from 'react';
-import PatientDashboard from '../Components/patient/PatientDashboard';
-import Navbar from '../Components/Navbar';
-import Footer from '../Components/Footer';
+import PatientDashboard from '../components/patient/PatientDashboard';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const PatientPage = () => {
   return (

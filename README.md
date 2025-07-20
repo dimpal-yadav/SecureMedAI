@@ -63,7 +63,7 @@ The platform incorporates machine learning models tailored to user roles:
 |------------------|----------------------------------|
 | Frontend         | React.js, Tailwind CSS           |
 | Backend          | Django REST Framework            |
-| Database         | PostgreSQL / SQLite              |
+| Database         | PostgreSQL                       |
 | Authentication   | JWT, Django Authentication       |
 | Charts           | Recharts, Chart.js               |
 | ML Models        | Random Forest, Federated Learning|
@@ -76,7 +76,7 @@ The platform incorporates machine learning models tailored to user roles:
 ```bash
 # Clone the repository
 git clone ""
-cd medipredict
+cd securemedai
 
 # Frontend setup
 cd frontend
@@ -85,6 +85,8 @@ npm start
 
 # Backend setup
 cd backend
+python -m venv env
+.\env\Scripts\activate  
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver

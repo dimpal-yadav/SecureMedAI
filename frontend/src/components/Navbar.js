@@ -31,8 +31,8 @@ function Navbar(){
     }
 
     return (
-      <div className="navigation">
-        <div className="header flex justify-between mx-[100px] mt-[30px] items-center">
+      <div className="navigation bg-[#EFF6FF]">
+        <div className="header flex justify-between px-[100px] py-[30px] items-center">
           <div className="header-item">
             <h4 className="font-bold">
               <Link to="/" className="nav-link">
@@ -46,12 +46,6 @@ function Navbar(){
               className="nav-link hover:text-[#1E40AF] transition-all-duration-300"
             >
               Home
-            </Link>
-            <Link
-              to="/contact"
-              className="nav-link hover:text-[#1E40AF] transition-all-duration-300"
-            >
-              Contact Us
             </Link>
             {isAuthenticated && (
               <>
