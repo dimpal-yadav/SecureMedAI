@@ -5,7 +5,7 @@ import TestimonialsSection from '../components/testimonial';
 
 function Home() {
   return (
-    <div className="home-page">
+    <div className="home-page bg-white text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen">
       {/* Navbar */}
       <div className="nav mb-8 md:mb-16 lg:mb-[120px]">
         <Navbar />
@@ -21,7 +21,7 @@ function Home() {
               </h1>
             </div>
             <div className="text w-full lg:w-1/2">
-              <p className="mb-6 md:mb-[30px]">
+              <p className="mb-6 md:mb-[30px] text-gray-700 dark:text-gray-300">
                 Our innovative application helps you identify potential diseases
                 based on your symptoms. Connect with specialized doctors and
                 manage your health seamlessly.
@@ -32,7 +32,7 @@ function Home() {
                     Get Started
                   </Link>
                 </button>
-                <button className="border border-gray-800 text-gray-800 px-6 py-2 text-[14px] font-bold hover:shadow-md transition-all duration-300">
+                <button className="border border-gray-800 text-gray-800 dark:border-blue-400 dark:text-blue-400 px-6 py-2 text-[14px] font-bold rounded-lg transition-all duration-300 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-400 dark:hover:text-gray-900">
                   <a href="#about-us">Learn More</a>
                 </button>
               </div>
@@ -58,10 +58,10 @@ function Home() {
       <section id="features" className="features-section px-4 md:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="head text-center">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold w-full md:w-3/4 lg:w-1/2 mx-auto text-[#1E40AF]">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold w-full md:w-3/4 lg:w-1/2 mx-auto text-[#1E40AF] dark:text-blue-400">
               Transform Your Health Journey with Technology
             </h2>
-            <p className="w-full md:w-4/5 lg:w-3/5 mx-auto mt-4 lg:mt-[20px] mb-10 lg:mb-[60px]">
+            <p className="w-full md:w-4/5 lg:w-3/5 mx-auto mt-4 lg:mt-[20px] mb-10 lg:mb-[60px] text-gray-700 dark:text-gray-300">
               Our application offers precise disease predictions based on your
               symptoms, connecting you with specialists who can provide tailored
               care. Experience seamless management of your health records with
@@ -70,7 +70,7 @@ function Home() {
           </div>
 
           <div className="features-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-14 mb-16 md:mb-24 lg:mb-[160px]">
-            <div className="feature-card bg-[#EFF6FF] p-6 md:p-8 rounded-lg text-center shadow-lg">
+            <div className="feature-card bg-[#EFF6FF] dark:bg-gray-800 p-6 md:p-8 rounded-lg text-center shadow-lg">
               <div className="icon flex justify-center mb-4 md:mb-6">
                 <img
                   src="/images/feature1.png"
@@ -78,16 +78,16 @@ function Home() {
                   className="w-16 h-16 md:w-20 md:h-20 lg:w-[80px] lg:h-[80px]"
                 />
               </div>
-              <h3 className="text-lg font-bold mb-4 md:mb-8 text-[#1D3D8E]">
+              <h3 className="text-lg font-bold mb-4 md:mb-8 text-[#1D3D8E] dark:text-blue-400">
                 Symptom Based Disease Prediction
               </h3>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
                 Get accurate predictions of potential diseases based on your
                 reported symptoms.
               </p>
             </div>
 
-            <div className="feature-card bg-[#EFF6FF] p-6 md:p-8 rounded-lg text-center shadow-lg">
+            <div className="feature-card bg-[#EFF6FF] dark:bg-gray-800 p-6 md:p-8 rounded-lg text-center shadow-lg">
               <div className="icon flex justify-center mb-4 md:mb-6">
                 <img
                   src="/images/feature2.png"
@@ -95,16 +95,16 @@ function Home() {
                   className="w-16 h-16 md:w-20 md:h-20 lg:w-[80px] lg:h-[80px]"
                 />
               </div>
-              <h3 className="text-lg font-bold mb-4 md:mb-8 text-[#1D3D8E]">
+              <h3 className="text-lg font-bold mb-4 md:mb-8 text-[#1D3D8E] dark:text-blue-400">
                 Recommend Specialized Doctors
               </h3>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
                 Easily connect with doctors who specialize in your predicted
                 health concerns.
               </p>
             </div>
 
-            <div className="feature-card bg-[#EFF6FF] p-6 md:p-8 rounded-lg text-center shadow-lg md:col-span-2 lg:col-span-1 md:mx-auto md:max-w-md lg:max-w-none">
+            <div className="feature-card bg-[#EFF6FF] dark:bg-gray-800 p-6 md:p-8 rounded-lg text-center shadow-lg md:col-span-2 lg:col-span-1 md:mx-auto md:max-w-md lg:max-w-none">
               <div className="icon flex justify-center mb-4 md:mb-6">
                 <img
                   src="/images/feature3.png"
@@ -112,10 +112,10 @@ function Home() {
                   className="w-16 h-16 md:w-20 md:h-20 lg:w-[80px] lg:h-[80px]"
                 />
               </div>
-              <h3 className="text-lg font-bold mb-4 md:mb-8 text-[#1D3D8E]">
+              <h3 className="text-lg font-bold mb-4 md:mb-8 text-[#1D3D8E] dark:text-blue-400">
                 Patient Details and Medical History
               </h3>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
                 Easily store and view patient details and view their medical
                 reports and history.
               </p>
@@ -132,7 +132,7 @@ function Home() {
               <h2 className="text-2xl md:text-3xl font-bold text-[#1E40AF] mb-6 lg:mb-[40px]">
                 About Us
               </h2>
-              <p>
+              <p className="text-gray-700 dark:text-gray-300">
                 At secure_med_ai, we believe in transforming healthcare through
                 the power of technology. Our platform combines intelligent
                 disease prediction, secure electronic health record (EHR)
@@ -144,15 +144,11 @@ function Home() {
                 specialists.
               </p>
               <br />
-              <p>
+              <p className="text-gray-700 dark:text-gray-300">
                 Our mission is to bridge the gap between patients and healthcare
                 professionals by simplifying the diagnostic journey and
                 promoting proactive care. Whether you're managing your personal
-                health or assisting a loved one, our intuitive and secure system
-                is designed to help you make informed decisions. We are
-                committed to innovation, privacy, and usability—ensuring that
-                our solution is not only smart but also trustworthy and easy to
-                use.
+                health or assisting a loved one, our intuitive and secure system is designed to help you make informed decisions. We are committed to innovation, privacy, and usability—ensuring that our solution is not only smart but also trustworthy and easy to use.
               </p>
             </div>
             <div className="image-container w-full lg:w-[45%] order-1 lg:order-2">

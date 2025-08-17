@@ -57,7 +57,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[linear-gradient(to_bottom,#b6ddf2,#f2f6fc)]">
+    <div className="min-h-screen w-full bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
       <div className="home pt-5 pl-10 absolute top-0 left-0">
         <Link to="/">
           <img src="/images/home.png" alt="" className="w-8 h-8" />

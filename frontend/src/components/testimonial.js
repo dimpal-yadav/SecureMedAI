@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -40,9 +39,9 @@ function TestimonialsSection() {
   };
 
   return (
-    <div id="review" className="py-16 bg-white">
+    <div id="review" className="py-16 bg-white dark:bg-gray-900">
       <div className="custom-container">
-        <h2 className="text-3xl font-bold text-center mb-12 text-[#1E40AF]">
+        <h2 className="text-3xl font-bold text-center mb-12 text-[#1E40AF] dark:text-blue-400">
           What Our Users Say
         </h2>
 
@@ -50,14 +49,14 @@ function TestimonialsSection() {
           {/* Left Arrow */}
           <button
             onClick={goToPrevious}
-            className="absolute left-[-20px] md:left-[-80px] top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 z-10"
+            className="absolute left-[-20px] md:left-[-80px] top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 dark:text-gray-500 dark:hover:text-blue-400 z-10"
             aria-label="Previous testimonial"
           >
             <ChevronLeft size={46} />
           </button>
 
           {/* Testimonial Card */}
-          <div className="overflow-hidden h-[300px] rounded-lg bg-[#EFF6FF] shadow-custom">
+          <div className="overflow-hidden h-[300px] rounded-lg bg-[#EFF6FF] dark:bg-gray-800 shadow-custom">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -65,12 +64,12 @@ function TestimonialsSection() {
               {testimonials.map((testimonial) => (
                 <div key={testimonial.id} className="flex-none w-full p-8">
                   <div className="mb-6">
-                    <span className="text-4xl font-serif">"</span>
-                    <p className="text-gray-800 leading-relaxed">
+                    <span className="text-4xl font-serif text-gray-700 dark:text-blue-400">"</span>
+                    <p className="text-gray-800 dark:text-gray-200 leading-relaxed">
                       {testimonial.text}
                     </p>
                   </div>
-                  <p className="font-medium text-[#1E40AF]">
+                  <p className="font-medium text-[#1E40AF] dark:text-blue-400">
                     {testimonial.author}
                   </p>
                 </div>
@@ -81,7 +80,7 @@ function TestimonialsSection() {
           {/* Right Arrow */}
           <button
             onClick={goToNext}
-            className="absolute right-[-20px] md:right-[-80px] top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 z-10"
+            className="absolute right-[-20px] md:right-[-80px] top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 dark:text-gray-500 dark:hover:text-blue-400 z-10"
             aria-label="Next testimonial"
           >
             <ChevronRight size={46} />
@@ -94,7 +93,9 @@ function TestimonialsSection() {
                 key={slideIndex}
                 onClick={() => goToSlide(slideIndex)}
                 className={`w-2 h-2 rounded-full ${
-                  currentIndex === slideIndex ? 'bg-gray-600' : 'bg-gray-300'
+                  currentIndex === slideIndex
+                    ? 'bg-gray-600 dark:bg-blue-400'
+                    : 'bg-gray-300 dark:bg-gray-600'
                 }`}
                 aria-label={`Go to slide ${slideIndex + 1}`}
               ></button>
