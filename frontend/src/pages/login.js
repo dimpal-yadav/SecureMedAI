@@ -73,7 +73,7 @@ export default function Login() {
           </div>
 
           <div className="mb-8 text-center md:mb-12">
-            <h3 className="mb-2 text-xl font-semibold md:text-2xl">
+            <h3 className="mb-2 text-xl font-semibold md:text-2xl text-black">
               Welcome Back!
             </h3>
             <p className="text-sm text-gray-600 md:text-base">
@@ -91,17 +91,26 @@ export default function Login() {
                     <img src="/images/user.png" alt="User icon" />
                   </div>
                   <select
-                    className={`w-full rounded-lg border p-2 pl-12 ${
+                    className={`w-full rounded-lg border p-2 pl-12 text-black ${
                       errors.role ? 'border-red-500' : 'border-[#a3a3a3]'
-                    }`}
+                    } ${!register ? '' : (!register('role').value ? 'text-black' : 'text-black')}`}
                     {...register('role', {
                       required: 'Please select your role',
                     })}
+                    defaultValue=""
                   >
-                    <option value="">Select Role</option>
-                    <option value="PATIENT">Patient</option>
-                    <option value="DOCTOR">Doctor</option>
-                    <option value="HOSPITAL_ADMIN">Hospital Admin</option>
+                    <option value="" disabled hidden className="text-black">
+                      Select Role
+                    </option>
+                    <option value="PATIENT" className="text-black">
+                      Patient
+                    </option>
+                    <option value="DOCTOR" className="text-black">
+                      Doctor
+                    </option>
+                    <option value="HOSPITAL_ADMIN" className="text-black">
+                      Hospital Admin
+                    </option>
                   </select>
                 </div>
                 {errors.role && (
@@ -120,7 +129,7 @@ export default function Login() {
                   <input
                     type="email"
                     placeholder="Email"
-                    className={`w-full rounded-lg border p-2 pl-12 ${
+                    className={`w-full rounded-lg border p-2 pl-12 text-black placeholder:text-black ${
                       errors.email ? 'border-red-500' : 'border-[#a3a3a3]'
                     }`}
                     {...register('email', {
@@ -153,7 +162,7 @@ export default function Login() {
                   <input
                     type="password"
                     placeholder="Password"
-                    className={`w-full rounded-lg border p-2 pl-12 ${
+                    className={`w-full rounded-lg border p-2 pl-12 text-black placeholder:text-black ${
                       errors.password ? 'border-red-500' : 'border-[#a3a3a3]'
                     }`}
                     {...register('password', {
