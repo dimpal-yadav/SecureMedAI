@@ -78,8 +78,12 @@ The platform incorporates machine learning models tailored to user roles:
 git clone ""
 cd securemedai
 
+# Database set up 
+Create a **.env** file with the help of .env.example
+
 # Frontend setup
 cd frontend
+npx update-browserslist-db@latest
 npm install
 npm start
 
@@ -89,4 +93,7 @@ python -m venv env
 .\env\Scripts\activate  
 pip install -r requirements.txt
 python manage.py migrate
+python manage.py create_test_users
+python manage.py populate_diseases
+python manage.py populate_doctors
 python manage.py runserver
