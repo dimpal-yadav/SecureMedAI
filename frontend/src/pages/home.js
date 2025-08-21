@@ -1,9 +1,27 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TestimonialsSection from '../components/testimonial';
 
 function Home() {
+   useEffect(() => {
+    const element = document.getElementById("typewriter");
+    const fullText = element.textContent; // get existing text
+    element.textContent = ""; // clear it for typing
+
+    let index = 0;
+
+    function type() {
+      if (index < fullText.length) {
+        element.textContent += fullText.charAt(index);
+        index++;
+        setTimeout(type, 100); // typing speed in ms
+      }
+    }
+
+    type()},
+    []);
   return (
     <div className="home-page bg-white text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen">
       {/* Navbar */}
@@ -16,7 +34,7 @@ function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-[120px]">
             <div className="title w-full lg:w-2/5">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 lg:mb-0">
+              <h1 id="typewriter" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 lg:mb-0">
                 Discover Your Health with Our Smart App
               </h1>
             </div>
