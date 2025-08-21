@@ -92,8 +92,46 @@ cd backend
 python -m venv env
 .\env\Scripts\activate  
 pip install -r requirements.txt
+
+# Security Setup - IMPORTANT!
+# Copy the example environment file and configure your settings
+cp env.example .env
+# Edit .env file with your actual credentials
+
 python manage.py migrate
+
+python manage.py runserver
+```
+
+### 🔐 Security Configuration
+
+**CRITICAL**: Before running the application, you must configure environment variables:
+
+1. **Copy the example environment file:**
+   ```bash
+   cp env.example .env
+   ```
+
+2. **Edit `.env` file with your actual credentials:**
+   - Generate a new Django SECRET_KEY
+   - Set your database credentials
+   - Configure CORS settings for your domain
+   - Add your email and API keys
+
+3. **Generate a secure Django SECRET_KEY:**
+   ```python
+   from django.core.management.utils import get_random_secret_key
+   print(get_random_secret_key())
+   ```
+
+4. **Production Settings:**
+   - Set `DEBUG=False`
+   - Configure `ALLOWED_HOSTS` with your domain
+   - Set `CORS_ALLOW_ALL_ORIGINS=False`
+   - Add your frontend domain to `CORS_ALLOWED_ORIGINS`
+=======
 python manage.py create_test_users
 python manage.py populate_diseases
 python manage.py populate_doctors
 python manage.py runserver
+
