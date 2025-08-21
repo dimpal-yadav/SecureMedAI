@@ -78,8 +78,12 @@ The platform incorporates machine learning models tailored to user roles:
 git clone ""
 cd securemedai
 
+# Database set up 
+Create a **.env** file with the help of .env.example
+
 # Frontend setup
 cd frontend
+npx update-browserslist-db@latest
 npm install
 npm start
 
@@ -95,6 +99,7 @@ cp env.example .env
 # Edit .env file with your actual credentials
 
 python manage.py migrate
+
 python manage.py runserver
 ```
 
@@ -124,3 +129,9 @@ python manage.py runserver
    - Configure `ALLOWED_HOSTS` with your domain
    - Set `CORS_ALLOW_ALL_ORIGINS=False`
    - Add your frontend domain to `CORS_ALLOWED_ORIGINS`
+=======
+python manage.py create_test_users
+python manage.py populate_diseases
+python manage.py populate_doctors
+python manage.py runserver
+

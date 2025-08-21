@@ -107,7 +107,7 @@ const UserManagement = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen">
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -144,7 +144,7 @@ const UserManagement = () => {
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   activeTab === tab.key
                     ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'bg-gray-100 text-gray-700'
                 }`}
               >
                 {tab.label} ({tab.count})
@@ -279,4 +279,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement; 
+export default UserManagement;

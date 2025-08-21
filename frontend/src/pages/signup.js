@@ -57,7 +57,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[linear-gradient(to_bottom,#b6ddf2,#f2f6fc)]">
+    <div className="min-h-screen w-full bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
       <div className="home pt-5 pl-10 absolute top-0 left-0">
         <Link to="/">
           <img src="/images/home.png" alt="" className="w-8 h-8" />
@@ -77,7 +77,7 @@ export default function Signup() {
           </div>
 
           <div className="mb-6 text-center md:mb-10">
-            <h3 className="mb-1 text-xl font-semibold md:text-2xl">
+            <h3 className="mb-1 text-xl font-semibold md:text-2xl text-black">
               Create your account
             </h3>
             <p className="text-sm text-gray-600 md:text-base">
@@ -101,7 +101,7 @@ export default function Signup() {
                   <input
                     type="text"
                     placeholder="Full Name"
-                    className={`w-full rounded-lg border p-2 pl-12 ${
+                    className={`w-full rounded-lg border p-2 pl-12 text-black placeholder:text-black ${
                       errors.name ? 'border-red-500' : 'border-[#a3a3a3]'
                     }`}
                     {...register('name', { required: 'Full name is required' })}
@@ -128,7 +128,7 @@ export default function Signup() {
                   <input
                     type="email"
                     placeholder="Email"
-                    className={`w-full rounded-lg border p-2 pl-12 ${
+                    className={`w-full rounded-lg border p-2 pl-12 text-black placeholder:text-black ${
                       errors.email ? 'border-red-500' : 'border-[#a3a3a3]'
                     }`}
                     {...register('email', {
@@ -154,17 +154,26 @@ export default function Signup() {
                     <img src="/images/user.png" alt="User icon" />
                   </div>
                   <select
-                    className={`w-full rounded-lg border p-2 pl-12 ${
+                    className={`w-full rounded-lg border p-2 pl-12 text-black ${
                       errors.role ? 'border-red-500' : 'border-[#a3a3a3]'
-                    }`}
+                    } ${!watch('role') ? 'text-black' : 'text-black'}`}
                     {...register('role', {
                       required: 'Please select your role',
                     })}
+                    defaultValue=""
                   >
-                    <option value="">Select Role</option>
-                    <option value="PATIENT">Patient</option>
-                    <option value="DOCTOR">Doctor</option>
-                    <option value="HOSPITAL_ADMIN">Hospital Admin</option>
+                    <option value="" disabled hidden className="text-black">
+                      Select Role
+                    </option>
+                    <option value="PATIENT" className="text-black">
+                      Patient
+                    </option>
+                    <option value="DOCTOR" className="text-black">
+                      Doctor
+                    </option>
+                    <option value="HOSPITAL_ADMIN" className="text-black">
+                      Hospital Admin
+                    </option>
                   </select>
                 </div>
                 {errors.role && (
@@ -188,7 +197,7 @@ export default function Signup() {
                   <input
                     type="password"
                     placeholder="Password"
-                    className={`w-full rounded-lg border p-2 pl-12 ${
+                    className={`w-full rounded-lg border p-2 pl-12 text-black placeholder:text-black ${
                       errors.password ? 'border-red-500' : 'border-[#a3a3a3]'
                     }`}
                     {...register('password', {
@@ -221,7 +230,7 @@ export default function Signup() {
                   <input
                     type="password"
                     placeholder="Confirm Password"
-                    className={`w-full rounded-lg border p-2 pl-12 ${
+                    className={`w-full rounded-lg border p-2 pl-12 text-black placeholder:text-black ${
                       errors.password2 ? 'border-red-500' : 'border-[#a3a3a3]'
                     }`}
                     {...register('password2', {
@@ -252,7 +261,7 @@ export default function Signup() {
                   <input
                     type="number"
                     placeholder="Age"
-                    className={`w-full rounded-lg border p-2 pl-12 ${
+                    className={`w-full rounded-lg border p-2 pl-12 text-black placeholder:text-black ${
                       errors.age ? 'border-red-500' : 'border-[#a3a3a3]'
                     }`}
                     {...register('age', {
@@ -287,21 +296,25 @@ export default function Signup() {
                     />
                   </div>
                   <select
-                    className={`w-full rounded-lg border p-2 pl-12 ${
+                    className={`w-full rounded-lg border p-2 pl-12 text-black ${
                       errors.gender ? 'border-red-500' : 'border-[#a3a3a3]'
-                    } ${!watch('gender') ? 'text-gray-400' : 'text-black'}`}
+                    } ${!watch('gender') ? 'text-black' : 'text-black'}`}
                     {...register('gender', {
                       required: 'Please select your gender',
                     })}
+                    defaultValue=""
                   >
-                    <option value="" className="text-gray-400">
-                      Gender
+                    <option value="" disabled hidden className="text-black">
+                      Select Gender
                     </option>
                     <option value="M" className="text-black">
                       Male
                     </option>
                     <option value="F" className="text-black">
                       Female
+                    </option>
+                    <option value="O" className="text-black">
+                      Others
                     </option>
                   </select>
                 </div>
