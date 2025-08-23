@@ -34,10 +34,17 @@ function Navbar({ theme = 'light' }){
     return (
   <div className={`navigation bg-[#EFF6FF] dark:bg-gray-900 dark:text-white ${theme === 'dark' ? 'dark' : ''}`}>
           <div className="header flex justify-between px-[100px] py-[30px] items-center">
-          <div className="header-item">
+          <div className="header-item flex items-center gap-3">
+
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+             </svg>
+            </div>
+
             <h4 className="font-bold">
               <Link to="/" className="nav-link">
-                secure_med_ai
+                SecureMedAI
               </Link>
             </h4>
           </div>
