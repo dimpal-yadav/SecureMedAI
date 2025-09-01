@@ -88,18 +88,17 @@ npm install
 npm start
 
 # Backend setup
-cd backend
-python -m venv env
-.\env\Scripts\activate  
-pip install -r requirements.txt
-
+cd backend/backend
 # Security Setup - IMPORTANT!
 # Copy the example environment file and configure your settings
 cp env.example .env
 # Edit .env file with your actual credentials
 
+cd ..
+python -m venv env
+.\env\Scripts\activate  
+pip install -r requirements.txt
 python manage.py migrate
-
 python manage.py runserver
 ```
 
