@@ -1,12 +1,17 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios';
 import { getBaseURL } from '../apiConfig';
 import { useState } from 'react';
 
+// --- Firebase Imports ---
+import { signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider } from '../firebase'; // Make sure you have created firebase.js as previously instructed
+
 export default function Login() {
   const [error, setError] = useState(false);
   const [copiedRole, setCopiedRole] = useState('');
+  const navigate = useNavigate(); // Initialize the navigate hook
 
   const {
     register,
@@ -22,35 +27,59 @@ export default function Login() {
     });
   };
 
-  const onSubmit = async (data) => {
-    // Handle login logic here
-    try {
-      const response = await axios.post(`${getBaseURL()}/user/login/`, data);
-
-      localStorage.setItem('token', response.data.token.access);
-      localStorage.setItem('refreshToken', response.data.token.refresh);
-      localStorage.setItem('name', response.data.name.split(' ')[0]);
-      localStorage.setItem('role', response.data.role);
-      
-      // Redirect based on role
-      switch(response.data.role) {
-        case 'PATIENT':
-          window.location.href = '/patient-dashboard';
-          break;
-        case 'DOCTOR':
-          window.location.href = '/doctor-dashboard';
-          break;
-        case 'HOSPITAL_ADMIN':
-          window.location.href = '/admin-dashboard';
-          break;
-        default:
-          window.location.href = '/';
-      }
-    } catch (err) {
-      console.error(err);
-      setError(err.response.data.errors.non_field_errors[0]);
+  // --- Reusable function to handle successful login ---
+  const handleAuthSuccess = (data) => {
+    localStorage.setItem('token', data.token.access);
+    localStorage.setItem('refreshToken', data.token.refresh);
+    localStorage.setItem('name', data.name.split(' ')[0]);
+    localStorage.setItem('role', data.role);
+    
+    // Redirect based on role using navigate
+    switch(data.role) {
+      case 'PATIENT':
+        navigate('/patient-dashboard');
+        break;
+      case 'DOCTOR':
+        navigate('/doctor-dashboard');
+        break;
+      case 'HOSPITAL_ADMIN':
+        navigate('/admin-dashboard');
+        break;
+      default:
+        navigate('/');
     }
   };
+
+  // --- Handler for the original email/password form ---
+  const onEmailSubmit = async (data) => {
+    try {
+      const response = await axios.post(`${getBaseURL()}/user/login/`, data);
+      handleAuthSuccess(response.data); // Use the success handler
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.errors?.non_field_errors?.[0] || 'Login failed. Please check your credentials.');
+    }
+  };
+  
+  // --- Handler for the new Firebase Google Sign-in ---
+  const handleGoogleSignIn = async () => {
+    try {
+        const result = await signInWithPopup(auth, googleProvider);
+        const idToken = await result.user.getIdToken();
+
+        // Send the Firebase ID token to your backend for verification
+        // NOTE: This endpoint '/firebase-auth/' is an example. You must create it in your Django backend.
+        const response = await axios.post(`${getBaseURL()}/firebase-auth/`, {
+            id_token: idToken,
+        });
+
+        handleAuthSuccess(response.data); // Use the same success handler
+    } catch (err) {
+        console.error("Firebase or Backend Error:", err);
+        setError(err.response?.data?.detail || 'Google Sign-in failed. Please try again.');
+    }
+  };
+
 
   return (
     <div className="min-h-screen w-full bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
@@ -66,7 +95,7 @@ export default function Login() {
               <img
                 src="/images/in.png"
                 alt="Logo"
-                fill
+                fill="true"
                 className="object-contain"
               />
             </div>
@@ -83,7 +112,7 @@ export default function Login() {
 
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
           <div className="form">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onEmailSubmit)}>
               {/* Role Selection */}
               <div className="mb-4">
                 <div className="relative">
@@ -93,7 +122,7 @@ export default function Login() {
                   <select
                     className={`w-full rounded-lg border p-2 pl-12 text-black ${
                       errors.role ? 'border-red-500' : 'border-[#a3a3a3]'
-                    } ${!register ? '' : (!register('role').value ? 'text-black' : 'text-black')}`}
+                    }`}
                     {...register('role', {
                       required: 'Please select your role',
                     })}
@@ -177,32 +206,45 @@ export default function Login() {
                 )}
               </div>
 
-              {/* Checkbox and Forgot Password */}
-              <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
-                {/* <div className="flex items-center">
-                  <input type="checkbox" id="rememberMe" className="mr-2" {...register("rememberMe")} />
-                  <label htmlFor="rememberMe" className="text-sm">
-                    Remember me
-                  </label>
-                </div> */}
+              {/* Forgot Password */}
+              <div className="mb-6 flex justify-end">
                 <Link
-                  href="/forgot-password"
-                  className="text-sm hover:underline"
+                  to="/forgot-password" // Use `to` for React Router Link
+                  className="text-sm text-black hover:underline"
                 >
                   Forgot Password?
                 </Link>
               </div>
 
-              {/* Button */}
+              {/* Login Button */}
               <div>
                 <button
                   type="submit"
                   className="w-full rounded-xl bg-black py-2.5 text-white transition-colors hover:bg-gray-800"
                 >
-                  Get Started
+                  Login
                 </button>
               </div>
             </form>
+
+            {/* --- OR Divider --- */}
+            <div className="my-6 flex items-center">
+                <div className="flex-grow border-t border-gray-300"></div>
+                <span className="mx-4 flex-shrink text-sm text-gray-600">OR</span>
+                <div className="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            {/* --- Google Sign-in Button --- */}
+            <div>
+                <button
+                    type="button"
+                    onClick={handleGoogleSignIn}
+                    className="w-full flex justify-center items-center gap-2 rounded-xl bg-white border border-gray-300 py-2.5 text-black transition-colors hover:bg-gray-50"
+                >
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" className="w-5 h-5" />
+                    Sign in with Google
+                </button>
+            </div>
 
             {/* Test Credentials Section */}
             <div className="mt-8 p-4 bg-gray-50 rounded-lg">
@@ -275,7 +317,7 @@ export default function Login() {
             {/* Signup */}
             <div className="mt-8 text-center text-sm">
               Don&apos;t have an account yet?
-              <Link to="/signup" className="ml-1 font-semibold hover:underline">
+              <Link to="/signup" className="ml-1 font-semibold hover:underline text-black">
                 Sign Up
               </Link>
             </div>

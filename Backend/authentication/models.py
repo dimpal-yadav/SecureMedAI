@@ -109,3 +109,4 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+firebase_uid = models.CharField(max_length=255, unique=True, null=True, blank=True)    
