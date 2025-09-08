@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import FirebaseGoogleAuthView 
 from authentication.views import (
     UserRegistrationView,
     UserLoginView,
@@ -43,4 +44,7 @@ urlpatterns = [
     path('pending-patients/', PendingPatientsView.as_view(), name='pending-patients'),
     path('patient/<int:patient_id>/approve/', PatientApproveView.as_view(), name='patient-approve'),
     path('patient/<int:patient_id>/reject/', PatientRejectView.as_view(), name='patient-reject'),
+    
+    path('firebase-auth/', FirebaseGoogleAuthView.as_view(), name='firebase-google-auth'),
 ]
+

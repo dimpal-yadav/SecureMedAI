@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
+from . import firebase_config 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 
